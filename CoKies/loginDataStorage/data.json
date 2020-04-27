@@ -1,5 +1,29 @@
 {
-  "id": 1,
-  "username": "go",
-  "password": "go"
+  "loginHistory": [
+    {
+      "id": 0,
+      "username": "Minka",
+      "password": "Svirkata"
+    },
+    {
+      "id": 0,
+      "username": "Minka",
+      "password": "Svirkata"
+    },
+    {
+      "id": 0,
+      "username": "Minka",
+      "password": "Svirkata"
+    },
+    {
+      "id": 1,
+      "username": "go",
+      "password": "go"
+    },
+    {
+      "id": 1,
+      "username": "go",
+      "password": "go"
+    }
+  ]
 }

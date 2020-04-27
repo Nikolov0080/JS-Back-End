@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const app = express();
-const users = require('./users');
+const users = require('./Statistics/users');
+const history = require('./Statistics/loginHistory');
 
 function auth(req, res, next) {
     const authUser = users.
@@ -47,35 +48,54 @@ app.get('/logout', (req, res) => {
             console.log(err);
         }
 
-    //    res.send('<h4>logged out</h4>');
-       
- 
-            res.redirect('/');
-     
+        //    res.send('<h4>logged out</h4>');
+
+
+        res.redirect('/');
+
     })
 })
 
 app.post('/login', (req, res) => {
-    console.log(req.body);
+
+
 
     const authUser = users.
         find(user => user.username === req.body.username);
 
 
 
-    if (authUser.password != req.body.password) {
+    if (authUser.password !== req.body.password) {
         res.sendFile(path.resolve('pages', '404.html'));
         return
     }
 
     req.session.userId = authUser.id;
 
+ history(authUser);
+
     //
-    fs.writeFile(path.resolve('loginDataStorage', 'data.json'), JSON.stringify(authUser, null, 2), (err) => {
-        if (err) {
-            console.log('Error!');
-        }
-    })
+
+    // fs.readFile(path.resolve('loginDataStorage', 'data.json'), 'utf8', (err, data) => {
+    //     if (err) {
+    //         console.log(err);
+    //         return;
+    //     }
+    //     let newData = JSON.parse(data);
+
+    //     console.log(newData);
+
+    //     newData.loginHistory.push(authUser);
+
+    //     fs.writeFile(path.resolve('loginDataStorage', 'data.json'), JSON.stringify(newData,null,2), (err) => {
+    //         if (err) {
+    //             console.log('Error!');
+    //         }
+    //     })
+
+    // })
+
+
     //     
     res.redirect('/');
 })
