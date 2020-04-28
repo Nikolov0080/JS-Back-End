@@ -5,8 +5,12 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const app = express();
-const users = require('./Statistics/users');
+let users = require('./Statistics/users');
 const history = require('./Statistics/loginHistory');
+const bcrypt = require('bcrypt');
+const saltRounds = 9;
+const myPlainTextPassword = "password123";
+
 
 function auth(req, res, next) {
     const authUser = users.
@@ -28,8 +32,6 @@ app.use(
         { secure: true }
     ));
 
-
-
 app.use(cookieParser());
 app.use(bodyParser.urlencoded());
 
@@ -42,63 +44,59 @@ app.get('/login', (req, res) => {
 
 });
 
+app.get('/register', (req, res) => {
+    res.sendFile(path.resolve('pages', 'register.html'))
+
+});
+
+app.post('/register', (req, res, next) => {
+
+    let { username, password } = req.body;
+    const user = users.find(user => user.username === username);
+
+    if (user) {
+        res.sendFile(path.resolve('pages', 'register.html'));
+        return;
+    }
+
+    bcrypt.hash(password, 10, (err, hash) => {
+        if (err) { next(err); return; }
+        users = users.concat({ id: 2, username, password: hash });
+        res.redirect('/');
+    });
+});
+
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             console.log(err);
         }
 
-        //    res.send('<h4>logged out</h4>');
-
-
         res.redirect('/');
-
     })
 })
 
 app.post('/login', (req, res) => {
 
-
-
     const authUser = users.
         find(user => user.username === req.body.username);
 
+    bcrypt.compare(req.body.password, authUser.password)
+        .then((res) => {
+            if (!res) {
+                res.sendFile(path.resolve('pages', '404.html'));
+                return;
+            }
 
+            req.session.userId = authUser.id;
 
-    if (authUser.password !== req.body.password) {
-        res.sendFile(path.resolve('pages', '404.html'));
-        return
-    }
+            history(authUser);
 
-    req.session.userId = authUser.id;
+          
+        });
+  res.redirect('/');
 
- history(authUser);
-
-    //
-
-    // fs.readFile(path.resolve('loginDataStorage', 'data.json'), 'utf8', (err, data) => {
-    //     if (err) {
-    //         console.log(err);
-    //         return;
-    //     }
-    //     let newData = JSON.parse(data);
-
-    //     console.log(newData);
-
-    //     newData.loginHistory.push(authUser);
-
-    //     fs.writeFile(path.resolve('loginDataStorage', 'data.json'), JSON.stringify(newData,null,2), (err) => {
-    //         if (err) {
-    //             console.log('Error!');
-    //         }
-    //     })
-
-    // })
-
-
-    //     
-    res.redirect('/');
-})
+});
 
 
 app.get('/', (req, res) => {
