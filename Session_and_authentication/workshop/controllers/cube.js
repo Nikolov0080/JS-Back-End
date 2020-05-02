@@ -30,8 +30,9 @@ function index(req, res, next) {
 }
 
 async function details(req, res, next) {
-  const id = req.params.id;
+  const id = req.cubes.params.id;
   const user = req.user;
+  console.log(user)
   try {
     const cube = await models.cubeModel.findById(id).populate('accessories');
     if (!cube) { res.redirect('/not-found'); return; }
