@@ -9,7 +9,7 @@ MongoClient.connect(url, function (err, db) {
 function createItem(db) {
     var dbo = db.db("ExpressAppDB");
     exports.create = function (email) {
-        dbo.collection("emails").insertOne({email}, function (err, res) {
+        dbo.collection("emails").insertOne( email , function (err, res) {
             if (err) throw err;
             console.log("1 document inserted");
             db.close();

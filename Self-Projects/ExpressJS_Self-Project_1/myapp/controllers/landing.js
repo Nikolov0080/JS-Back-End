@@ -8,6 +8,8 @@ exports.get_landing = function (req, res, next) {
 
 exports.submit_lead = function (req, res, next) {
     console.log(req.body);
-    dataBase.create(req.body.lead_email);
-    res.redirect('/')
+    const date = new Date();
+
+    dataBase.create({ email: req.body.lead_email, date: date.getDate() });
+    res.redirect('/');
 }
