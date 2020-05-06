@@ -1,15 +1,17 @@
 let dataBase = require('../DataBase/db');
 
 
-exports.get_landing = function (req, res, next) {
+exports.get_landing = function (req, res, next) {//get
     res.render('landing', { title: 'Express' });
 }
 
 
-exports.submit_lead = function (req, res, next) {
-    console.log(req.body);
-    const date = new Date();
+exports.submit_lead = function (req, res, next) {//post
 
-    dataBase.create({ email: req.body.lead_email, date: date.getDate() });
-    res.redirect('/');
+    const date = new Date();
+    const todayNumber = date.getDate();
+
+
+
 }
+

@@ -1,20 +1,19 @@
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/";
+const emailSchema = require('../Schemas/emailSch').emailSchema;
 
-MongoClient.connect(url, function (err, db) {
-    if (err) throw err;
-    createItem(db)
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/Email_DB', {
+    useNewUrlParser: true
 });
 
-function createItem(db) {
-    var dbo = db.db("ExpressAppDB");
-    exports.create = function (email) {
-        dbo.collection("emails").insertOne( email , function (err, res) {
-            if (err) throw err;
-            console.log("1 document inserted");
-            db.close();
-        });
-    }
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
-}
+db.once('open', function () {
+    console.log('Connected!');
+
+});
+
+db.model('Email',emailSchema);
+
 
