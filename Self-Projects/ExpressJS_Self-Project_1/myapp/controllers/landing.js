@@ -22,9 +22,17 @@ exports.submit_lead = function (req, res, next) {//post
         if (err) return; console.error(err);
 
         console.log(`${emailModel} is saved in the data base!`);
-    })
+    });
 
-    // console.log(emailModel)
-    res.redirect('/')
+    res.redirect('/');
+}
+
+exports.getAll = function (req, res, next) {
+
+    const results = dataBase.getAllUsers.find({ todayNumber: 7 })
+    results.count(true).then(a => console.log(a))
+    results.toArray().then(a => console.log(a));
+
+    res.render('layout', { data: 'Data' });
 }
 

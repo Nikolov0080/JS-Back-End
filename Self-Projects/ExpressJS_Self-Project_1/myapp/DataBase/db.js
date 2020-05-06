@@ -16,4 +16,4 @@ db.once('open', function () {
 
 exports.emailModel = db.model('Email', emailSchema);
 
-
+exports.getAllUsers = db.collection('emails');
