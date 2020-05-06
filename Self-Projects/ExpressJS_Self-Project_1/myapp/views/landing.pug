@@ -4,5 +4,10 @@ block content
   h1= title
   p Welcome to #{title}
   form(action="/" method="post")
-    input(name="lead_email" ,type="email", placeholder = "Enter your email here please! now!")
+    input(name="username" ,type="text", placeholder = "Enter your Username ")
+
+    input(name="email" ,type="email", placeholder = "Enter your email ")
+  
+    input(name="password" type="password",placeholder = "Enter your password")
+    br
     button(type="submit") Submit

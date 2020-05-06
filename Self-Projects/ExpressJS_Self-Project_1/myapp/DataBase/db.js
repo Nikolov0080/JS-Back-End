@@ -14,6 +14,6 @@ db.once('open', function () {
 
 });
 
-db.model('Email',emailSchema);
+exports.emailModel = db.model('Email', emailSchema);
 
 
