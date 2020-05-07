@@ -1,5 +1,6 @@
 const dataBase = require('../DataBase/db');
-
+const { json } = require('express');
+const moment = require('moment');
 
 exports.get_landing = function (req, res, next) {//get
     res.render('landing', { title: 'Express' });
@@ -8,12 +9,11 @@ exports.get_landing = function (req, res, next) {//get
 
 exports.submit_lead = function (req, res, next) {//post
 
-    const date = new Date();
-    const todayNumber = date.getDate();
+    const timeCreated = moment().format('MMMM Do YYYY, h:mm:ss a');
 
     const userData = {
         ...req.body,
-        todayNumber
+        timeCreated
     }
 
     const emailModel = dataBase.emailModel(userData);
@@ -29,10 +29,13 @@ exports.submit_lead = function (req, res, next) {//post
 
 exports.getAll = function (req, res, next) {
 
-    const results = dataBase.getAllUsers.find({ todayNumber: 7 })
-    results.count(true).then(a => console.log(a))
-    results.toArray().then(a => console.log(a));
+    const results = dataBase.getAllUsers.find({})
 
-    res.render('layout', { data: 'Data' });
+    results.toArray().then(usersList => {
+        console.log(usersList)
+        res.render('layout', { data: usersList });
+    });
+
+
 }
 
