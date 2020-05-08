@@ -15,7 +15,7 @@ block content
           p= "Username: " + val.username
           p= "Email: " + val.email
           p= "Password: " + val.password
-          p(name="da")= "Record created on: " + val.timeCreated
+          p= "Record created on: " + val.timeCreated
           form(action="/all" method="POST")
             input(type="submit" value="Delete")
 

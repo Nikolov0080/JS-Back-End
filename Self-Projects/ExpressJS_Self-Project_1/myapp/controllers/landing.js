@@ -39,7 +39,7 @@ exports.getAll = function (req, res, next) {
 }
 
 exports.deleteOne = function (req, res, next) {
-    console.log(req.params);
+  console.log(req.body)
     res.redirect('/all')
 }
 

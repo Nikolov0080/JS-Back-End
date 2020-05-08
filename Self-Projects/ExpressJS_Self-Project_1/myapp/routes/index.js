@@ -12,6 +12,6 @@ router.use(bodyParser.json())
 router.get('/', landing.get_landing);
 router.post('/', landing.submit_lead);
 router.get('/all', landing.getAll);
-router.post('/all',landing.deleteOne);
+
 
 module.exports = router;
