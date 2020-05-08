@@ -24,7 +24,7 @@ exports.submit_lead = function (req, res, next) {//post
         console.log(`${emailModel} is saved in the data base!`);
     });
 
-    res.redirect('/');
+    res.redirect('/all');
 }
 
 exports.getAll = function (req, res, next) {
@@ -32,10 +32,14 @@ exports.getAll = function (req, res, next) {
     const results = dataBase.getAllUsers.find({})
 
     results.toArray().then(usersList => {
-        console.log(usersList)
         res.render('layout', { data: usersList });
     });
 
 
+}
+
+exports.deleteOne = function (req, res, next) {
+    console.log(req.params);
+    res.redirect('/all')
 }
 
