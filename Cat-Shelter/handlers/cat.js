@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const qs = require('querystring');
 const formidable = require('formidable');
-const breeds = require('../data/breeds');
+const breeds = require('../data/breeds.json');
 const cats = require('../data/cats');
 
 
@@ -56,15 +56,15 @@ module.exports = (req, res) => {
 
         let formData = '';
 
-        res.on('data', (data) => {
+        req.on('data', (data) => {
             formData += data;
         });
 
-        res.on('end', () => {
+        req.on('end', () => {
 
             let body = qs.parse(formData);
-            res.writeFile(body)
-            fs.readFile('../data/breeds.json'), (err, data) => {
+            // res.writeFile(body)
+            fs.readFile('./data/breeds.json', (err, data) => {
 
                 if (err) {
                     throw err;
@@ -72,14 +72,15 @@ module.exports = (req, res) => {
 
                 let breeds = JSON.parse(data);
                 breeds.push(body.breed);
-                let json = JSON.stringify(breeds);
+                let json = JSON.stringify(breeds, null, 2);
 
-                fs.writeFile('../data/breeds.json', breeds, 'utf-8', () => console.log('The breed list has been updated successfully'));
+                console.log(json);
 
-            }
+                fs.writeFile('../data/breeds.json', json, () => console.log('The breed list has been updated successfully'));
+            })
 
-            res.writeFile({ localHost: '/' });
-            res.send();
+            res.writeHead(301, { location: '/' });
+            res.end();
 
         })
     } else {
