@@ -13,6 +13,12 @@ module.exports = (req, res) => {
 
     if (pathname === '/cats/add-cat' && req.method === 'GET') {
 
+       
+
+        let catBreedPlaceholder = breeds.map(x => `<option value="${x}>"${x}</option>`);
+        let modifiedData;
+        // console.log(catBreedPlaceholder)
+
         let filePath = path.normalize(
             path.join(__dirname, '../views/addCat.html')
         );
@@ -20,7 +26,8 @@ module.exports = (req, res) => {
         let file = fs.createReadStream(filePath)
 
         file.on('data', (data) => {
-            res.write(data)
+            let modifiedData = data.toString().replace('{{catBreeds}}',catBreedPlaceholder);
+            res.write(modifiedData)
         })
 
         file.on('end', () => {
@@ -63,7 +70,7 @@ module.exports = (req, res) => {
         req.on('end', () => {
 
             let body = qs.parse(formData);
-            // res.writeFile(body)
+
             fs.readFile('./data/breeds.json', (err, data) => {
 
                 if (err) {
@@ -72,15 +79,21 @@ module.exports = (req, res) => {
 
                 let breeds = JSON.parse(data);
                 breeds.push(body.breed);
+
                 let json = JSON.stringify(breeds, null, 2);
 
-                console.log(json);
 
-                fs.writeFile('../data/breeds.json', json, () => console.log('The breed list has been updated successfully'));
+                let writeStream = fs.createWriteStream('./data/breeds.json');
+
+                writeStream.write(json);
+
             })
 
+
             res.writeHead(301, { location: '/' });
+
             res.end();
+
 
         })
     } else {
