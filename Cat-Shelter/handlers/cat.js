@@ -13,12 +13,7 @@ module.exports = (req, res) => {
 
     if (pathname === '/cats/add-cat' && req.method === 'GET') {
 
-
-
         let catBreedPlaceholder = breeds.map(x => `<option value="${x}">${x}</option>`);
-        let modifiedData;
-        // console.log(catBreedPlaceholder)
-
         let filePath = path.normalize(
             path.join(__dirname, '../views/addCat.html')
         );
@@ -79,24 +74,28 @@ module.exports = (req, res) => {
 
                 let breeds = JSON.parse(data);
                 breeds.push(body.breed);
-
                 let json = JSON.stringify(breeds, null, 2);
-
-
                 let writeStream = fs.createWriteStream('./data/breeds.json');
 
                 writeStream.write(json);
-
+                console.log(`${body.breed} is added to the Data Base!`);
             })
-
 
             res.writeHead(301, { location: '/' });
 
             res.end();
-
-
         })
-    } else {
+    } else if (pathname === '/cats/add-cat' && req.method === 'POST') {
+
+        let form = formidable.IncomingForm();
+
+        form.parse(req, (res, fields, files) => {
+            console.log(fields)
+            // TODO save the Cat-Data and the Image-file.
+        })
+
+    }
+    else {
         return true;
     }
 
