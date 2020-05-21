@@ -13,9 +13,9 @@ module.exports = (req, res) => {
 
     if (pathname === '/cats/add-cat' && req.method === 'GET') {
 
-       
 
-        let catBreedPlaceholder = breeds.map(x => `<option value="${x}>"${x}</option>`);
+
+        let catBreedPlaceholder = breeds.map(x => `<option value="${x}">${x}</option>`);
         let modifiedData;
         // console.log(catBreedPlaceholder)
 
@@ -26,7 +26,7 @@ module.exports = (req, res) => {
         let file = fs.createReadStream(filePath)
 
         file.on('data', (data) => {
-            let modifiedData = data.toString().replace('{{catBreeds}}',catBreedPlaceholder);
+            let modifiedData = data.toString().replace('{{catBreeds}}', catBreedPlaceholder);
             res.write(modifiedData)
         })
 
