@@ -90,7 +90,6 @@ module.exports = (req, res) => {
         let form = formidable.IncomingForm();
 
         form.parse(req, (res, fields, files) => {
-            // console.log(fields);
 
             fs.readFile('./data/cats.json', (err, data) => {
 
@@ -102,14 +101,14 @@ module.exports = (req, res) => {
                 let id = cats.length + 1;
                 let imageName = files.upload.name;
                 let oldPath = files.upload.path;
-               
-            
+
+
                 let newPath = "C:/catsData/" + imageName;
                 console.log(newPath);
-                
-                fs.rename(oldPath, newPath,  (err) =>{
+
+                fs.rename(oldPath, newPath, (err) => {
                     if (err) throw err;
-                  
+
                 });
                 let catData = { id, ...fields, imageName }
 
@@ -122,9 +121,6 @@ module.exports = (req, res) => {
                 writeStream.write(json);
                 console.log(`A new Cat with name: ${fields.name} has been added to the Data Base!`);
             })
-
-
-            // TODO save the Cat-Data and the Image-file.
         })
 
     }
