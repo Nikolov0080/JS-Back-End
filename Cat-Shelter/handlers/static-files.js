@@ -13,45 +13,80 @@ function getContentType(url) {
         return 'text/js';
     } else if (url.endsWith('png')) {
         return 'text/png';
-    }else if (url.endsWith('ico')) {
+    } else if (url.endsWith('ico')) {
         return 'text/ico';
-    }else if (url.endsWith('jpg')) {
+    } else if (url.endsWith('jpg')) {
         return 'text/jpg';
-    }else if (url.endsWith('ico')) {
+    } else if (url.endsWith('ico')) {
         return 'text/ico';
     }
-    
+
 }
 
 module.exports = (req, res) => {
 
     let pathname = url.parse(req.url).pathname;
 
-    if (pathname.startsWith('/content') && req.method === 'GET') {
+    if ((pathname.startsWith('/content') || pathname.startsWith('')) && req.method === 'GET') {
 
-        fs.readFile((`./${pathname}`),'utf8' ,(err, data) => {
+        if (pathname.endsWith('.jpg')
+            || pathname.endsWith('.png')
+            || pathname.endsWith('.jpeg')
+            || pathname.endsWith('.ico')
+            && req.method === 'GET') {
 
-            if (err) {
-                console.log(err);
-                res.writeHead(404, {
-                    'Content-Type': 'text/plain'
-                });
+            fs.readFile((`./${pathname}`), (err, data) => {
 
-                res.write('ERROR ERROR ERROR!');
+                if (err) {
+                    console.log(err);
+                    res.writeHead(404, {
+                        'Content-Type': 'text/plain'
+                    });
+
+                    res.write('ERROR ERROR ERROR!');
+                    res.end();
+                    return;
+                }
+
+                res.writeHead(
+                    200,
+                    { 'Content-Type': getContentType(pathname) }
+                );
+
+                res.write(data);
                 res.end();
-                return;
-            }
+            })
+        } else {
 
-            res.writeHead(
-                200,
-                { 'Content-Type': getContentType(pathname) }
-            );
+            fs.readFile((`./${pathname}`), 'utf8', (err, data) => {
 
-            res.write(data);
-            res.end();
-        })
+                if (err) {
+                    console.log(err);
+                    res.writeHead(404, {
+                        'Content-Type': 'text/plain'
+                    });
+
+                    res.write('ERROR ERROR ERROR!');
+                    res.end();
+                    return;
+                }
+
+                res.writeHead(
+                    200,
+                    { 'Content-Type': getContentType(pathname) }
+                );
+
+                res.write(data);
+                res.end();
+            })
+        }
+
+
 
     } else {
         return true;
     }
 }
+
+
+
