@@ -5,8 +5,8 @@ const getNumbers = (req, res, next) => {
     next()
 }
 
-router.get('/', getNumbers, (req, res, next) => {
-    res.status(200).send(`the data: ${req.numbers}`); // goes here
+router.get('/', getNumbers, (req, res) => {
+    res.status(200).render(`index.html`); // goes here
 })
 
 router.post('/', (req, res) => {
