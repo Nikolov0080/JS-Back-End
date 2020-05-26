@@ -2,9 +2,11 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const homeRouter = require('./routes/home-page');
+const searchRouter = require('./routes/search');
 
 
 app.use('/', homeRouter);
+app.use('/', searchRouter);
 
 app.listen(port, (err) => {
     if (err) {
@@ -17,10 +19,6 @@ app.listen(port, (err) => {
 
 
 
-app.get('/search/:keyword', (req, res) => {
-    const keyword = req.params.keyword
-    res.send(`keyword: ${keyword}`)
-})
 
 app.get('*', (req, res) => {
     res.send('PAGE NOT FOUND!')
