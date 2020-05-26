@@ -1,16 +1,18 @@
 const router = require('express').Router();
 
-const getNumbers = (req, res, next) => {
-    req.numbers = '0010011'; // data from here
-    next()
+const homePageContext = {
+   context:'hohohoho',
+   title:'Title'
 }
 
-router.get('/', getNumbers, (req, res) => {
-    res.status(200).render(`index.html`); // goes here
+
+router.get('/',  (req, res, next) => {
+    res.status(200).render('home',homePageContext);
+
 })
 
 router.post('/', (req, res) => {
-    res.send('post request')
+    res.send('post request');
 })
 
 module.exports = router;
