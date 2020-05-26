@@ -5,5 +5,12 @@
     "description": "234234",
     "breed": "maika ti",
     "imageName": "images.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Zhivko Nikolov",
+    "description": "sdfghj",
+    "breed": "Unknown",
+    "imageName": "creatingFunctins.js"
   }
 ]
