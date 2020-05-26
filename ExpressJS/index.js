@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const homeRouter = require('./routes/home-page');
+
+
+app.use('/', homeRouter);
 
 app.listen(port, (err) => {
     if (err) {
@@ -12,19 +16,12 @@ app.listen(port, (err) => {
 });
 
 
-app.get('/', (req, res, next) => {
 
-    req.data = '0010011'; // data from here
-    next();
-}, (req, res) => {
-    res.status(200).send(`the data: ${req.data}`); // goes here
-}) 
-
-app.post('/', (req, res) => {
-    res.send('users: [1,2,3]')
+app.get('/search/:keyword', (req, res) => {
+    const keyword = req.params.keyword
+    res.send(`keyword: ${keyword}`)
 })
 
-app.get('/search', (req, res) => {
-    res.send('123123123')
+app.get('*', (req, res) => {
+    res.send('PAGE NOT FOUND!')
 })
-
