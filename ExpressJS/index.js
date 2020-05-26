@@ -12,9 +12,13 @@ app.listen(port, (err) => {
 });
 
 
-app.get('/', (req, res) => {
-    res.send('Welcome to Home Page!');
-})
+app.get('/', (req, res, next) => {
+
+    req.data = '0010011'; // data from here
+    next();
+}, (req, res) => {
+    res.status(200).send(`the data: ${req.data}`); // goes here
+}) 
 
 app.post('/', (req, res) => {
     res.send('users: [1,2,3]')
