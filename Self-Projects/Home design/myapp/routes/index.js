@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
-// const { Schema } = require('mongoose');
 const mongoose = require('mongoose');
-const Design = require('../dataBase/schemas').Design
+const { Design } = require('../dataBase/schemas')
 /* GET home page. */
+
+
 router.get('/', function (req, res, next) {
   res.render('index');
 });
@@ -16,8 +17,6 @@ router.post('/', (req, res) => {
       console.log('Connected!!!')
     })
 
-
-
   const new_Design = new Design({
     name: req.body.name,
     ImageUrl: req.body.ImageUrl,
@@ -25,12 +24,19 @@ router.post('/', (req, res) => {
     description: req.body.description
   })
 
-  new_Design.save((err) => {
+  new_Design.create((err) => {
     if (err) { return err };
   })
 
-
   res.redirect('/');
+})
+
+router.get('/all', async (req, res) => { // finish here and render the page TODO
+  mongoose.connect('mongodb://localhost:27017/myapp', { useUnifiedTopology: true, useNewUrlParser: true })
+
+  const data = await Design.find({});
+  console.log(data);
+  res.end();
 })
 
 module.exports = router;
