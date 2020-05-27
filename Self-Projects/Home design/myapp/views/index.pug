@@ -1,5 +1,21 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .main-container
+    .row
+      .d
+        h1.display-4.m-b-2 Sign Up
+
+        // register form
+        form(method='POST' action='/register')
+          div(class='create-box').form-group
+            label(for='name') Name:
+            input#name.form-control(type='text' placeholder='first and last' name='name')
+          div(class='create-box').form-group
+            label(for='email') Email:
+            input#email.form-control(type='email' placeholder='name@email.com' name='email')
+          div(class='create-box').form-group
+            label(for='favoriteBook') Design style:
+            input#favoriteBook.form-control(type='text' placeholder='title of book' name='designStyle')
+
+          button.btn.btn-primary(type='submit') Sign up
