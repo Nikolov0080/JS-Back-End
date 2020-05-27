@@ -4,5 +4,26 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+.row {
+  border: gray 3px solid;
+  box-shadow: 5px 10px #888888;
+  margin: 20px;
+  text-align: center;
+  width: 20%;
+  height: 400px;
+  margin-left: 40%;
+}
+
+.create-box {
+  /* border: #000000 1px solid; */
+  font-size: medium;
+  margin: 25px;
+}
+
+input {
+  margin-left: 6px;
+  font-size: medium;
 }

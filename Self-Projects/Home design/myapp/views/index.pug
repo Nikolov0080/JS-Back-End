@@ -4,18 +4,19 @@ block content
   .main-container
     .row
       .d
-        h1.display-4.m-b-2 Sign Up
+        h1.display-4.m-b-2 Create Design
 
-        // register form
-        form(method='POST' action='/register')
+        form(method='POST' action='/')
           div(class='create-box').form-group
-            label(for='name') Name:
+            label(for='name') Your Name:
             input#name.form-control(type='text' placeholder='first and last' name='name')
           div(class='create-box').form-group
-            label(for='email') Email:
-            input#email.form-control(type='email' placeholder='name@email.com' name='email')
+            label(for='imageUrl') Image URL:
+            input#image.form-control(type='text' placeholder='//http:...' name='ImageUrl')
           div(class='create-box').form-group
-            label(for='favoriteBook') Design style:
-            input#favoriteBook.form-control(type='text' placeholder='title of book' name='designStyle')
+            label(for='designStyle') Design style:
+            input#designStyle.form-control(type='text' placeholder='title of book' name='designStyle')
+          div(class='text-box').form-group
+            textarea(type='text' placeholder='Type description here...' name="description" cols="35" rows="6")
 
-          button.btn.btn-primary(type='submit') Sign up
+          button.btn.btn-primary(type='submit') Submit
