@@ -24,11 +24,11 @@ router.post('/', (req, res) => {
     description: req.body.description
   })
 
-  new_Design.create((err) => {
+  new_Design.save((err) => {
     if (err) { return err };
   })
 
-  res.redirect('/');
+  res.redirect('/all');
 })
 
 router.get('/all', async (req, res) => { // finish here and render the page TODO

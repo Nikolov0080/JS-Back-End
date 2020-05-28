@@ -28,20 +28,32 @@ input {
   font-size: medium;
 }
 
+img {
+  height: 150px;
+  width: 200px;
+}
+
+div.item-container {
+  width: 60%;
+  height: 158px;
+  border: red solid 4px;
+  border: #6585ec 3px solid;
+  box-shadow: 5px 10px #6585ec;
+}
+
 div.image-box {
-  width: 80%;
-  background-color: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  text-align: center;
+  float: right;
+  /* border: red solid 4px; */
 }
 
 div.text-container {
-  text-align: center;
-  padding: 10px 20px;
-  background-color: rgb(234, 237, 247);
+  float: left;
+  /* border: red solid 4px; */
 }
 
-div.image-box img {
-  height: 100%;
-  width: 100%;
+.design-box{
+  list-style-type: none;
+  margin: 15px;
+  
 }
+
