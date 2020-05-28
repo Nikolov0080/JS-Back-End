@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
 
   const new_Design = new Design({
     name: req.body.name,
-    ImageUrl: req.body.ImageUrl,
+    imageUrl: req.body.ImageUrl,
     designStyle: req.body.designStyle,
     description: req.body.description
   })
@@ -35,8 +35,10 @@ router.get('/all', async (req, res) => { // finish here and render the page TODO
   mongoose.connect('mongodb://localhost:27017/myapp', { useUnifiedTopology: true, useNewUrlParser: true })
 
   const data = await Design.find({});
-  console.log(data);
-  res.end();
+  // console.log(data);
+  const input = { a: ['a', 'b', 'c'] }
+  res.render('all', { data });
+  // res.end();
 })
 
 module.exports = router;

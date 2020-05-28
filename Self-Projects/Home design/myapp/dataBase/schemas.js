@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 
 const schema = new Schema({
     name: String,
-    ImageUrl: String,
+    imageUrl: String,
     designStyle: String,
     description: String
 });

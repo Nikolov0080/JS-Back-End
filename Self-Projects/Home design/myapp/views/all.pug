@@ -2,3 +2,13 @@ extends layout
 
 block content
   .main-container
+    ul
+  each val in data
+    li(class='design-box')
+      div(class='item-container')
+        p(class='user-name')= val.name
+        p(class='description')= val.description
+        div(class='image-box')
+         img(src= val.imageUrl)
+         div(class='text-container')
+          p(class='design-style')= val.designStyle
