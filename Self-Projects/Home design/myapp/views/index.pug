@@ -1,12 +1,14 @@
 extends layout
 
 block content
-  .main-container
+  .main-container 
+    form(method='get' action='/all')
+         button.btn.btn-primary(class='click-me' type='submit') Go to All designs
     .row
       .d
         h1.display-4.m-b-2 Create Design
 
-        form(method='POST' action='/')
+        form(method='POST' action='/') 
           div(class='create-box').form-group
             label(for='name') Your Name:
             input#name.form-control(type='text' placeholder='first and last' name='name')
@@ -19,4 +21,7 @@ block content
           div(class='text-box').form-group
             textarea(type='text' placeholder='Type description here...' name="description" cols="35" rows="6")
 
-          button.btn.btn-primary(type='submit') Submit
+          button.btn.btn-primary(class='click-me' type='submit') Submit
+       
+        
+        

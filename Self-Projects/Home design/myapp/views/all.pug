@@ -9,6 +9,8 @@ block content
         div(class='image-box')
           img(src= val.imageUrl)
         div(class='text-container')
-           p(class='user-name')=  val.name 
-           p(class='design-style')= val.designStyle
-           p(class='description')= val.description
+          p(class='user-name')= 'Name: '+  val.name 
+          p(class='design-style')='Design style: ' + val.designStyle
+          p(class='description')= 'Description: ' + val.description
+  form(method='get' action='/')
+    button.btn.btn-primary(class='click-me' type='submit') Create your own design
