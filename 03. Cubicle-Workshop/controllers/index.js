@@ -40,8 +40,9 @@ exports.details = (req, res) => {
 
     fs.readFile(db, (err, data) => {
         const cubes = JSON.parse(data);
+        const currentCube = cubes.find(item => item.cubeId == req.params.id);
 
-        res.render('details');
+        res.render('details', { currentCube });
     });
 }
 
