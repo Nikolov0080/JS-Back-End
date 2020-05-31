@@ -2,17 +2,10 @@
 const controllers = require('../controllers/index');
 
 module.exports = (app) => {
-    app.get('/', function (req, res) {
-        res.render('index');
-    });
 
-    app.get('/about', (req, res) => {
-        res.render('about');
-    });
-
-    app.get('/create', (req, res) => {
-        res.render('create');
-    });
-
+    app.get('/', controllers.All);
+    app.get('/about', controllers.about);
+    app.get('/create', controllers.create);
+    app.get('/details/:id',controllers.details)
     app.post('/create', controllers.createCube);
 };
