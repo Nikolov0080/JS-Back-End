@@ -34,3 +34,15 @@ exports.details = (req, res) => {
         res.render('details', { currentCube });
     });
 }
+
+exports.deleteItem = (req, res) => {
+    const doc_ID = req.params;
+
+    Model.deleteOne(doc_ID, (err) => {
+        if (err) { console.error(err) }
+    }).then((response) => {
+        console.log(response);
+    })
+
+    res.redirect('/')
+}
