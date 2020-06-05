@@ -10,21 +10,13 @@
 
 <body>
   <div class="container">
-    <header>
-      <ul>
-        <li><img class="logo" src="/images/logo.png"></li>
-        <li><a href="/">Browse</a></li>
-        <li><a href="/">Add a Cube</a></li>
-        <li><a href="/">Add Accessory</a></li>
-        <li><a href="/">About</a></li>
-      </ul>
-    </header>
+   
     <main>
       <h1>Attach a new accessory</h1>
       <div class="form">
         <h2>Rubiks Cube</h2>
         <img class="cube" src="https://images-na.ssl-images-amazon.com/images/I/71WS9kb-JFL._SL1300_.jpg">
-        <form action='' method="">
+        <form action='/attach/accessory/{{id}}' method="POST">
           <label for="accessory">Accessories</label>
           <select id="accessory" name="accessory">
             <option value="Accessory 1">Accessory 1</option>
@@ -41,7 +33,6 @@
       </div>
     </main>
   </div>
-  <footer>@Cubicle: Exercise for Express.js and Handlebars</footer>
 
 </body>
 

@@ -7,46 +7,39 @@
     <link href="./css/site.css" type="text/css" rel="stylesheet">
     <link rel='shortcut icon' type='image/x-icon' href='./images/favicon.png' />
 </head>
+
 <body>
     <div class="container">
-        <header>
-            <ul>
-                <li><img class="logo" src="/images/logo.png"></li>
-                <li><a href="/">Browse</a></li>
-                <li><a href="/">Add a Cube</a></li>
-                <li><a href="/">Add Accessory</a></li>
-                <li><a href="/">About</a></li>
-            </ul>
-        </header>
+
         <main>
-            <h1>Rubiks Cube</h1>
-            <img class="cube" src="https://images-na.ssl-images-amazon.com/images/I/71WS9kb-JFL._SL1300_.jpg">
+            {{#if currentCube}}
+            <h1>{{currentCube.name}}</h1>
+            <img class="cube" src={{currentCube.imageUrl}}>
             <div class="details">
-                <p><span>Description:</span>Some Description....</p>
-                <p><span>Difficulty level:</span> 6</p>
+                <p><span>Description:</span>{{currentCube.description}}</p>
+                <p><span>Difficulty level:</span>{{currentCube.difficultyLevel}}</p>
                 <a class="btn" href="/">Back</a>
             </div>
             <h2>Accessories</h2>
             <div class="accessories">
+                {{!-- accessories here --}}
+                {{!-- {{#if accessory}} --}}
                 <div class="accessory">
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/61J8UP8pySL._SX425_.jpg" alt="stickerName">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/61J8UP8pySL._SX425_.jpg"
+                        alt="stickerName">
                     <h3>Accessory Name</h3>
                     <p>Accessory Description</p>
                 </div>
-                <div class="accessory">
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/61J8UP8pySL._SX425_.jpg" alt="stickerName">
-                    <h3>Accessory Name</h3>
-                    <p>Accessory Description</p>
-                </div>
-                <div class="accessory">
-                    <img src="https://images-na.ssl-images-amazon.com/images/I/61J8UP8pySL._SX425_.jpg" alt="stickerName">
-                    <h3>Accessory Name</h3>
-                    <p>Accessory Description</p>
-                </div>
+                {{!-- {{else}} --}}
                 <h3 class="italic">This cube has no accessories yet...</h3>
+                {{!-- accessory ends here --}}
             </div>
+            {{else}}
+             <h1>Error (some error occurs...)</h1>
+             {{/if}}
         </main>
     </div>
-    <footer>@Cubicle: Exercise for Express.js and Handlebars</footer>
+
 </body>
+
 </html>

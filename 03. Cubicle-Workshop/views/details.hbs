@@ -10,18 +10,9 @@
 
 <body>
   <div class="container">
-    <header>
-      <ul>
-        <li><img class="logo" src="/images/logo.png"></li>
-        <li><a href="/">Browse</a></li>
-        <li><a href="/create/cube">Add a Cube</a></li>
-        <li><a href="/create/accessory">Add Accessory</a></li>
-        <li><a href="/about">About</a></li>
-      </ul>
-    </header>
+  
     {{#if currentCube}}
     <main>
-      <h1>Gan356 Air SM</h1>
       <img class="cube" src="{{currentCube.imageUrl}}">
       <div class="details">
         <p><span>Description:</span> {{currentCube.description}}</p>
@@ -33,7 +24,6 @@
     <h1>Error (some error occurs...)</h1>
     {{/if}}
   </div>
-  <footer>@Cubicle: Exercise for Express.js and Handlebars</footer>
 </body>
 
 </html>

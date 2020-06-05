@@ -16,23 +16,29 @@ exports.createCube = (req, res) => {
 
     const cubeData = { ...req.body }
     const a = Model(cubeData);
-
+    console.log('cube created !');
     a.save();
     res.redirect('/');
 }
 
 exports.All = (req, res) => {
 
-    Model.find().then(cubes => {
-        const newCubes = cubes.slice();
+    Model.find().lean().then(newCubes => {
         res.render('index', { newCubes });
     });
 }
 
 exports.details = (req, res) => {
 
-    Model.findOne(req.params._id).then(currentCube => {
-        res.render('details', { currentCube });
+    const id = { _id: req.params.id }
+
+    Model.find(id).then(currentCube => {
+        currentCube = currentCube[0];
+        res.render('updatedDetailsPage', { currentCube });
     });
 }
 
+
+exports.notFound = (req, res) => {
+    res.render('404')
+}
