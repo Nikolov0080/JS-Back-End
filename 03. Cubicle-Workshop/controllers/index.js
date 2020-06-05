@@ -16,6 +16,7 @@ exports.createCube = (req, res) => {
 
     const cubeData = { ...req.body }
     const a = Model(cubeData);
+
     a.save();
     res.redirect('/');
 }
