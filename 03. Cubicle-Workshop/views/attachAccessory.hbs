@@ -14,8 +14,8 @@
     <main>
       <h1>Attach a new accessory</h1>
       <div class="form">
-        <h2>Rubiks Cube</h2>
-        <img class="cube" src="https://images-na.ssl-images-amazon.com/images/I/71WS9kb-JFL._SL1300_.jpg">
+        <h2>{{currentCube.name}}</h2>
+        <img class="cube" src={{currentCube.imageUrl}}>
         <form action='/attach/accessory/{{id}}' method="POST">
           <label for="accessory">Accessories</label>
           <select id="accessory" name="accessory">

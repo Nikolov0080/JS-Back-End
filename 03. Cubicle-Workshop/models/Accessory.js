@@ -9,4 +9,4 @@ const accessorySchema = new Schema({
     cubes: [{ type: 'ObjectId', ref: 'Cube' }]
 });
 
-exports.accessoryModel = mongoose.model('Cube', accessorySchema);
+exports.Accessory = mongoose.model('Accessory', accessorySchema);

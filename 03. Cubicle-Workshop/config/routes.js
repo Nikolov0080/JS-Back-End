@@ -9,8 +9,8 @@ module.exports = (app) => {
     app.get('/details/:id', controllers.details)
     app.post('/create/cube', controllers.createCube);
     app.get('/create/accessory', accessory.createAccessory);
-    app.post('/create/accessory', accessory.create);
-    app.get('/attach/accessory/:_id', accessory.attachAccessory);
+    app.post('/create/accessory', accessory.createNewAccessory);
+    app.get('/attach/accessory/:id', accessory.attachAccessory);
 
     app.get('*', controllers.notFound);
 };
