@@ -14,7 +14,8 @@
       <ul>
         <li><img class="logo" src="/images/logo.png"></li>
         <li><a href="/">Browse</a></li>
-        <li><a href="/create">Add a Cube</a></li>
+        <li><a href="/create/cube">Add a Cube</a></li>
+        <li><a href="/create/accessory">Add Accessory</a></li>
         <li><a href="/about">About</a></li>
       </ul>
     </header>
@@ -26,7 +27,6 @@
         <p><span>Description:</span> {{currentCube.description}}</p>
         <p><span>Difficulty level:</span>{{currentCube.difficultyLevel}}</p>
         <a class="btn" href="/">Back</a>
-        <a type="submit" class="btn-delete" href="/{{currentCube._id}}">Delete</a>
       </div>
     </main>
     {{else}}
