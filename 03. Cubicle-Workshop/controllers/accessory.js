@@ -18,9 +18,9 @@ exports.createNewAccessory = async (req, res) => {
     await accessory.save((err) => {
         if (err) {
             console.error(err.message);
-            res.redirect('/create/accessory')
+            res.redirect('/create/accessory');
         } else {
-            res.redirect('/create/accessory')
+            res.redirect('/');
         }
     });
 
@@ -30,7 +30,11 @@ exports.attachAccessory = async (req, res) => {
 
     const [data] = await getCube({ _id: req.params.id })
     const accessories = await getAccessories()
-    const cube = { ...data._doc, accessories };
+    const cube = {
+        ...data._doc,
+        accessories,
+        isCompletelyAttached: data._doc.accessories.length === accessories.length
+    };
     res.render('attachAccessory', { cube });
 
 }
@@ -40,9 +44,9 @@ exports.attachAccessoryPOST = async (req, res) => {
         accessory
     } = req.body;
 
-    await updateCube(req.params.id, accessory )
+    await updateCube(req.params.id, accessory)
 
-   
+
 
     res.redirect(`/details/${req.params.id}`)
 }

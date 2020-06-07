@@ -1,9 +1,9 @@
 const Cube = require('../models/Cube').cubeModel;
 const Accessory = require('../models/Accessory').Accessory;
-const mongoose = require('mongoose');
 
-exports.getCube = (id) => {
-    return Cube.find(id);
+exports.getCube =async (id) => {
+    const cube = await Cube.find(id);
+    return cube
 }
 
 exports.getAccessories = () => {
@@ -14,9 +14,14 @@ exports.updateCube = async (cubeId, accessoryId) => {
 
     await Cube.findByIdAndUpdate(cubeId, {
         $addToSet: {
-
             accessories: [accessoryId]
         }
-    })
-
+    });
 }
+
+exports.getCubeWithAccessories = async(id) => {
+    const cube = await Cube.find(id).populate('accessories').lean();
+    return cube;
+}
+
+
