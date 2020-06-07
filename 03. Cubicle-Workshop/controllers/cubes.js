@@ -3,7 +3,7 @@ const Cube = require('../models/Cube').cubeModel;
 const Accessory = require('../models/Accessory').Accessory;
 const mongoose = require('mongoose');
 const { getCube, getCubeWithAccessories } = require('./CRUD_Funcs');
-mongoose.connect('mongodb://localhost:27017/cubes', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect('mongodb://localhost:27017/cubes', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 exports.about = (req, res) => {

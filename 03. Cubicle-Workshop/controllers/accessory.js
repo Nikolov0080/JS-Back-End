@@ -1,8 +1,8 @@
 const Model = require('../models/Cube').cubeModel;
 const Accessory = require('../models/Accessory').Accessory;
 const mongoose = require('mongoose');
-const { getCube, getAccessories, updateCube } = require('./CRUD_Funcs');
-mongoose.connect('mongodb://localhost:27017/cubes', { useNewUrlParser: true, useUnifiedTopology: true });
+const { getCube, getAccessories, updateCube, updateAccessory } = require('./CRUD_Funcs');
+// mongoose.connect('mongodb://localhost:27017/cubes', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 
@@ -45,8 +45,7 @@ exports.attachAccessoryPOST = async (req, res) => {
     } = req.body;
 
     await updateCube(req.params.id, accessory)
-
-
+    await updateAccessory(req.params.id, accessory)
 
     res.redirect(`/details/${req.params.id}`)
 }
