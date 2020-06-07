@@ -17,8 +17,14 @@ exports.createCube = (req, res) => {
     const cubeData = { ...req.body }
     const a = Model(cubeData);
     console.log('cube created !');
-    a.save();
-    res.redirect('/');
+    a.save((err) => {
+        if (err) {
+            console.error(err.message);
+            res.redirect('/create/cube');
+        }else{
+            res.redirect('/');
+        }
+    });
 }
 
 exports.All = (req, res) => {
