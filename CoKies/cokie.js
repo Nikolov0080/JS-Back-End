@@ -91,20 +91,14 @@ app.post('/login', (req, res) => {
             req.session.userId = authUser.id;
 
             history(authUser);
-
-          
         });
   res.redirect('/');
 
 });
 
-
 app.get('/', (req, res) => {
-    // res.cookie('test_cookie', { test: 124 }).send('<h1>DA</h1>');
-    res.send('Home Page :)');
-    // res.locals
+    res.sendFile(path.resolve('pages', 'homePage.html'));
+       
 });
-
-
 
 app.listen(3000, () => console.log('server is Up for you on port 3000'));
