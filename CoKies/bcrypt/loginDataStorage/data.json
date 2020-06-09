@@ -1,0 +1,44 @@
+{
+  "loginHistory": [
+    {
+      "id": 0,
+      "username": "Minka",
+      "password": "Svirkata"
+    },
+    {
+      "id": 0,
+      "username": "Minka",
+      "password": "Svirkata"
+    },
+    {
+      "id": 0,
+      "username": "Minka",
+      "password": "Svirkata"
+    },
+    {
+      "id": 1,
+      "username": "go",
+      "password": "go"
+    },
+    {
+      "id": 1,
+      "username": "go",
+      "password": "go"
+    },
+    {
+      "id": 0,
+      "username": "Minka",
+      "password": "Svirkata"
+    },
+    {
+      "id": 2,
+      "username": "123",
+      "password": "$2b$10$9SxeJHddXJcE9hG3nyVMQu4jJSgnKvQKjz5oECEg3PQOegC/hjKii"
+    },
+    {
+      "id": 2,
+      "username": "123",
+      "password": "$2b$10$3f8YKiyK5pH7wr29m1mygOcZ1CGriYXpYYz4VbVirCvE/Wt0v9HlW"
+    }
+  ]
+}
