@@ -3,16 +3,16 @@ const Cube = require('../models/Cube').cubeModel;
 const Accessory = require('../models/Accessory').Accessory;
 const mongoose = require('mongoose');
 const { getCube, getCubeWithAccessories } = require('./CRUD_Funcs');
-// mongoose.connect('mongodb://localhost:27017/cubes', { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 
 exports.about = (req, res) => {
     res.render('about');
 }
 
-exports.create = ((req, res) => {
+exports.create = (req, res) => {
     res.render('create');
-});
+}
 
 exports.createCube = (req, res) => {
 
@@ -42,7 +42,14 @@ exports.details = (req, res) => {
     });
 }
 
-
 exports.notFound = (req, res) => {
     res.render('404')
+}
+
+exports.editGET = (req, res) => {// TODO
+        res.render('editCubePage');
+}
+
+exports.deleteGET = (req, res) => {// TODO
+    res.render('deleteCubePage');
 }
