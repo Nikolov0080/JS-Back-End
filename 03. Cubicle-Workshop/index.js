@@ -5,11 +5,9 @@ const app = require('express')();
 // db
 const mongoose = require('mongoose');
 
-
-mongoose.connect(config.databaseUrl, {useFindAndModify:false, useNewUrlParser: true , useUnifiedTopology: true }, (err) => {
+mongoose.connect(config.databaseUrl, { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
     if (err) { console.error(err); throw err }
-
-    console.log('Cloud DB connected!')
+    console.log('Cloud DB connected!');
 })
 // /db
 

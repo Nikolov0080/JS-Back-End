@@ -1,9 +1,7 @@
-// TODO: Require Controllers...
 const controllers = require('../controllers/cubes');
 const accessory = require('../controllers/accessory');
-const users = require('../users/users');
+const users = require('../users/auth');
 module.exports = (app) => {
-
     app.get('/', controllers.All);
     app.get('/about', controllers.about);
     app.get('/create/cube', controllers.create);
@@ -15,9 +13,19 @@ module.exports = (app) => {
     app.post('/attach/accessory/:id', accessory.attachAccessoryPOST);
     app.get('/edit/:id', controllers.editGET);
     app.get('/delete/:id', controllers.deleteGET);
+
+    // AUTH
+
     app.get('/login', users.loginGET);
     app.get('/register', users.registerGET);
+    app.post('/register', users.registerPOST);
+    app.post('/login', users.loginPOST);
+
+
     app.get('/logout', users.logout);
     // TODO create login,register,edit and delete POST routes!
+
+    // AUTH
+
     app.get('*', controllers.notFound);
 };
