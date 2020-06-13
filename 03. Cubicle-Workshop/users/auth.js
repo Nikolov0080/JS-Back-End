@@ -1,6 +1,6 @@
 const User = require('../models/users').User;
 
-const { saveUser, loginUser } = require('../controllers/user');
+const { saveUser, loginUser,checkAuth } = require('../controllers/user');
 
 
 exports.loginGET = (req, res) => {

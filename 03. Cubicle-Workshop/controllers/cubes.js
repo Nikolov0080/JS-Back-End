@@ -2,17 +2,18 @@
 const { privateKey } = require('./JWT_P_Key');
 const Cube = require('../models/Cube').cubeModel;
 const { getCube, getCubeWithAccessories } = require('./CRUD_Funcs');
+const { checkAuth } = require('../controllers/user');
 const jwt = require('jsonwebtoken');
 
 exports.about = (req, res) => {
     res.render('about');
 }
 
-exports.create = (req, res) => {
+exports.create = (req, res, checkAuth) => {
     res.render('create');
 }
 
-exports.createCube = async (req, res) => {
+exports.createCube = checkAuth, async (req, res) => {
 
     const token = req.cookies['aid'];
     const decodedData = await jwt.verify(token, privateKey)
@@ -45,9 +46,6 @@ exports.details = (req, res) => {
     });
 }
 
-exports.notFound = (req, res) => {
-    res.render('404')
-}
 
 exports.editGET = (req, res) => {// TODO
     res.render('editCubePage');
@@ -55,4 +53,8 @@ exports.editGET = (req, res) => {// TODO
 
 exports.deleteGET = (req, res) => {// TODO
     res.render('deleteCubePage');
+}
+
+exports.notFound = (req, res) => {
+    res.render('404')
 }

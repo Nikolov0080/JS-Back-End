@@ -21,7 +21,6 @@ module.exports = (app) => {
     app.post('/register', users.registerPOST);
     app.post('/login', users.loginPOST);
 
-
     app.get('/logout', users.logout);
     // TODO create login,register,edit and delete POST routes!
 

@@ -1,4 +1,4 @@
-const {privateKey} = require('./JWT_P_Key');
+const { privateKey } = require('./JWT_P_Key');
 const { User } = require('../models/users');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -35,12 +35,31 @@ exports.saveUser = (req, res) => {
 exports.loginUser = async (req, res) => {
     const { username, password } = req.body;
     const currentUser = await User.findOne({ username })
-    const isLogged = hashFunc.readHash(password, currentUser.password);
-
-    if (isLogged) {
-        res.cookie('aid', tokenFunc(currentUser._id, username, privateKey));
-        console.log(`${username} is now logged in!`);
+    if (currentUser) {
+        const isLogged = hashFunc.readHash(password, currentUser.password);
+        if (isLogged) {
+            res.cookie('aid', tokenFunc(currentUser._id, username, privateKey));
+            console.log(`${username} is now logged in!`);
+        }
     }
-    
+
+
+
     return false;
+}
+
+exports.checkAuth = async (req, res, next) => {
+
+    const token = req.cookies['aid'];
+
+    if (!token) {
+        return res.redirect('/');
+    }
+
+    const decodedData = await jwt.verify(token, privateKey)
+    
+    
+     next();
+    
+   
 }
