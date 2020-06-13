@@ -1,10 +1,8 @@
-'use strict'
+// const Accessory = require('../models/Accessory').Accessory;
+const { privateKey } = require('./JWT_P_Key');
 const Cube = require('../models/Cube').cubeModel;
-const Accessory = require('../models/Accessory').Accessory;
-const mongoose = require('mongoose');
 const { getCube, getCubeWithAccessories } = require('./CRUD_Funcs');
-
-
+const jwt = require('jsonwebtoken');
 
 exports.about = (req, res) => {
     res.render('about');
@@ -14,16 +12,21 @@ exports.create = (req, res) => {
     res.render('create');
 }
 
-exports.createCube = (req, res) => {
+exports.createCube = async (req, res) => {
 
-    const cubeData = { ...req.body }
+    const token = req.cookies['aid'];
+    const decodedData = await jwt.verify(token, privateKey)
+    const cubeData = { ...req.body, creatorId: decodedData.userID }
     const a = Cube(cubeData);
-    console.log('cube created !');
+
     a.save((err) => {
         if (err) {
             console.error(err.message);
             res.redirect('/create/cube');
-        } else { res.redirect('/'); }
+        } else {
+            console.log('cube created !');
+            res.redirect('/');
+        }
     });
 }
 
@@ -47,7 +50,7 @@ exports.notFound = (req, res) => {
 }
 
 exports.editGET = (req, res) => {// TODO
-        res.render('editCubePage');
+    res.render('editCubePage');
 }
 
 exports.deleteGET = (req, res) => {// TODO

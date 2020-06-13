@@ -1,0 +1,1 @@
+exports.privateKey = 'hamster_na_ime_Milen';
