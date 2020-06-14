@@ -20,8 +20,10 @@
                 <p><span>Difficulty level:</span>{{currentCube.difficultyLevel}}</p>
 
                 <a class="btn" href="/attach/accessory/{{currentCube._id}}">Attach Accessory</a>
+                {{#if currentCube.isCreator}}
                 <a class="btn" href="/edit/{{currentCube._id}}">Edit </a>
                 <a class="btn" href="/delete/{{currentCube._id}}">Delete</a>
+                {{/if}}
                 <a class="btn" href="/">Back</a>
             </div>
             <h2>Accessories</h2>

@@ -13,7 +13,7 @@ exports.create = (req, res, checkAuth) => {
     res.render('create');
 }
 
-exports.createCube = checkAuth, async (req, res) => {
+exports.createCube = async (req, res) => {
 
     const token = req.cookies['aid'];
     const decodedData = await jwt.verify(token, privateKey)
@@ -38,21 +38,51 @@ exports.All = (req, res) => {
     });
 }
 
-exports.details = (req, res) => {
+exports.details = async (req, res) => {
     const id = { _id: req.params.id }
     const cube = getCube(id);
-    getCubeWithAccessories(id).then(([currentCube]) => {
+    const token = req.cookies['aid']; // get the token
+    const { userID } = await jwt.verify(token, privateKey)// get the data from the token
+    
+    getCubeWithAccessories(id).then(([cube]) => {
+        const isCreator = (userID == cube.creatorId)
+        currentCube = { ...cube, isCreator };
         res.render('updatedDetailsPage', { currentCube });
     });
 }
 
 
-exports.editGET = (req, res) => {// TODO
-    res.render('editCubePage');
+exports.editGET = async (req, res, checkAuth) => {
+    const cube = await Cube.findOne({ _id: req.params.id })
+    res.render('editCubePage', { cube });
 }
 
-exports.deleteGET = (req, res) => {// TODO
-    res.render('deleteCubePage');
+exports.deleteGET = async (req, res, checkAuth) => {
+    const cube = await Cube.findOne({ _id: req.params.id })
+    res.render('deleteCubePage', { cube });
+}
+
+exports.deletePOST = async (req, res, checkAuth) => {
+
+    await Cube.deleteOne({ _id: req.params.id });
+    console.log('Cube deleted successfully!');
+    res.redirect('/')
+}
+
+exports.editPOST = async (req, res, checkAuth) => {
+
+    let cubeToUpdate = await Cube.findOne({ _id: req.params.id })
+    let updateData = req.body;
+
+    const updated = Object.assign(cubeToUpdate, updateData)
+  
+
+    await Cube.updateOne({ _id: req.params.id }, updated, (err, raw) => {
+        if (err) { console.error(err) }
+        console.log('Cube updated !')
+    });
+
+    res.redirect(`/`)
 }
 
 exports.notFound = (req, res) => {

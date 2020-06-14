@@ -13,7 +13,8 @@ module.exports = (app) => {
     app.post('/attach/accessory/:id', accessory.attachAccessoryPOST);
     app.get('/edit/:id', controllers.editGET);
     app.get('/delete/:id', controllers.deleteGET);
-
+    app.post('/edit/:id', controllers.editPOST);
+    app.post('/delete/:id', controllers.deletePOST);
     // AUTH
 
     app.get('/login', users.loginGET);

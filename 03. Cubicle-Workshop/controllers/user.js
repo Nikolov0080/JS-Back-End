@@ -58,8 +58,5 @@ exports.checkAuth = async (req, res, next) => {
 
     const decodedData = await jwt.verify(token, privateKey)
     
-    
-     next();
-    
-   
+         next();
 }
