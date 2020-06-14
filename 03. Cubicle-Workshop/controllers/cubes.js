@@ -1,16 +1,18 @@
-// const Accessory = require('../models/Accessory').Accessory;
 const { privateKey } = require('./JWT_P_Key');
 const Cube = require('../models/Cube').cubeModel;
 const { getCube, getCubeWithAccessories } = require('./CRUD_Funcs');
-const { checkAuth } = require('../controllers/user');
+
 const jwt = require('jsonwebtoken');
 
 exports.about = (req, res) => {
     res.render('about');
 }
 
-exports.create = (req, res, checkAuth) => {
+exports.create =  (req, res,) => {
+
     res.render('create');
+
+
 }
 
 exports.createCube = async (req, res) => {
@@ -31,51 +33,58 @@ exports.createCube = async (req, res) => {
     });
 }
 
-exports.All = (req, res) => {
+exports.All = async (req, res) => {
 
-    Cube.find().lean().then(newCubes => {
+    Cube.find().lean().then(cube => {
+        let newCubes = { ...cube };
         res.render('index', { newCubes });
-    });
-}
 
+    });
+
+}
 exports.details = async (req, res) => {
     const id = { _id: req.params.id }
     const cube = getCube(id);
     const token = req.cookies['aid']; // get the token
-    const { userID } = await jwt.verify(token, privateKey)// get the data from the token
-    
-    getCubeWithAccessories(id).then(([cube]) => {
-        const isCreator = (userID == cube.creatorId)
-        currentCube = { ...cube, isCreator };
-        res.render('updatedDetailsPage', { currentCube });
-    });
+    if (token) {
+        const { userID } = await jwt.verify(token, privateKey)// get the data from the token
+
+        getCubeWithAccessories(id).then(([cube]) => {
+            const isCreator = (userID == cube.creatorId)
+            currentCube = { ...cube, isCreator };
+            res.render('updatedDetailsPage', { currentCube });
+        });
+    } else {
+        res.redirect('/')
+    }
+
 }
 
 
-exports.editGET = async (req, res, checkAuth) => {
+exports.editGET = async (req, res,) => {
     const cube = await Cube.findOne({ _id: req.params.id })
     res.render('editCubePage', { cube });
 }
 
-exports.deleteGET = async (req, res, checkAuth) => {
+exports.deleteGET = async (req, res,) => {
     const cube = await Cube.findOne({ _id: req.params.id })
     res.render('deleteCubePage', { cube });
 }
 
-exports.deletePOST = async (req, res, checkAuth) => {
+exports.deletePOST = async (req, res,) => {
 
     await Cube.deleteOne({ _id: req.params.id });
     console.log('Cube deleted successfully!');
     res.redirect('/')
 }
 
-exports.editPOST = async (req, res, checkAuth) => {
+exports.editPOST = async (req, res,) => {
 
     let cubeToUpdate = await Cube.findOne({ _id: req.params.id })
     let updateData = req.body;
 
     const updated = Object.assign(cubeToUpdate, updateData)
-  
+
 
     await Cube.updateOne({ _id: req.params.id }, updated, (err, raw) => {
         if (err) { console.error(err) }

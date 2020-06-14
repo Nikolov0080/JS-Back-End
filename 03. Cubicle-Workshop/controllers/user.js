@@ -43,20 +43,6 @@ exports.loginUser = async (req, res) => {
         }
     }
 
-
-
     return false;
 }
 
-exports.checkAuth = async (req, res, next) => {
-
-    const token = req.cookies['aid'];
-
-    if (!token) {
-        return res.redirect('/');
-    }
-
-    const decodedData = await jwt.verify(token, privateKey)
-    
-         next();
-}

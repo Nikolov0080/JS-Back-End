@@ -1,7 +1,10 @@
 const controllers = require('../controllers/cubes');
 const accessory = require('../controllers/accessory');
 const users = require('../users/auth');
+
+
 module.exports = (app) => {
+
     app.get('/', controllers.All);
     app.get('/about', controllers.about);
     app.get('/create/cube', controllers.create);

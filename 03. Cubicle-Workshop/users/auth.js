@@ -1,10 +1,10 @@
 const User = require('../models/users').User;
 
-const { saveUser, loginUser,checkAuth } = require('../controllers/user');
+const { saveUser, loginUser, isLogged } = require('../controllers/user');
 
 
-exports.loginGET = (req, res) => {
-    res.render('loginPage');
+exports.loginGET =  (req, res) => {
+  res.render('loginPage');
 }
 
 exports.registerGET = (req, res) => {
@@ -21,7 +21,7 @@ exports.registerPOST = async (req, res) => {
     }
 }
 
-exports.loginPOST = async  (req, res) => {
+exports.loginPOST = async (req, res) => {
     const status = await loginUser(req, res);
 
     if (!status) {

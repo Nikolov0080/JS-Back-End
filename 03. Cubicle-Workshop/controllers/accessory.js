@@ -2,12 +2,13 @@ const Model = require('../models/Cube').cubeModel;
 const Accessory = require('../models/Accessory').Accessory;
 const mongoose = require('mongoose');
 const { getCube, getAccessories, updateCube, updateAccessory } = require('./CRUD_Funcs');
-// mongoose.connect('mongodb://localhost:27017/cubes', { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 
-exports.createAccessory = (req, res) => {
+exports.createAccessory =  (req, res) => {
+
     res.render('createAccessory');
+
 }
 
 exports.createNewAccessory = async (req, res) => {
