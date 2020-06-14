@@ -46,3 +46,20 @@ exports.loginUser = async (req, res) => {
     return false;
 }
 
+exports.auth = (req, res, next) => {
+    const token = req.cookies['aid'];
+    if (token) {
+        next();
+    } else {
+        res.redirect('/')
+    }
+}
+
+exports.isLogged = (req, res, next) => {
+    const token = req.cookies['aid'];
+    if (token) {
+        res.redirect('/')
+    } else {
+        next();
+    }
+}

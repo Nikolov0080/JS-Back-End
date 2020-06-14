@@ -3,8 +3,8 @@ const User = require('../models/users').User;
 const { saveUser, loginUser, isLogged } = require('../controllers/user');
 
 
-exports.loginGET =  (req, res) => {
-  res.render('loginPage');
+exports.loginGET = (req, res) => {
+    res.render('loginPage');
 }
 
 exports.registerGET = (req, res) => {
@@ -32,5 +32,5 @@ exports.loginPOST = async (req, res) => {
 }
 
 exports.logout = (req, res) => { // TODO
-    res.redirect('/');
+    res.clearCookie('aid').redirect('/');
 }

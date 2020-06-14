@@ -11,8 +11,6 @@ exports.about = (req, res) => {
 exports.create =  (req, res,) => {
 
     res.render('create');
-
-
 }
 
 exports.createCube = async (req, res) => {
