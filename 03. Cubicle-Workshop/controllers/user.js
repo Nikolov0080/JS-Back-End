@@ -2,6 +2,8 @@ const { privateKey } = require('./JWT_P_Key');
 const { User } = require('../models/users');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const Cube = require('../models/Cube').cubeModel;
+
 
 const hashFunc = {
     createHash: (password) => { return bcrypt.hashSync(password, 10) },
@@ -51,15 +53,35 @@ exports.auth = (req, res, next) => {
     if (token) {
         next();
     } else {
-        res.redirect('/')
+        res.redirect('/');
     }
 }
 
 exports.isLogged = (req, res, next) => {
     const token = req.cookies['aid'];
     if (token) {
-        res.redirect('/')
+        res.redirect('/');
     } else {
         next();
     }
+}
+
+exports.isCreator = async (req, res, next) => {
+    const token = req.cookies['aid']; // get the token
+    
+    if (token) {
+        const { userID } = await jwt.verify(token, privateKey)// get the ID from the token
+        const cubeID = { _id: req.params.id };
+        const creatorID = (await Cube.findOne(cubeID)).creatorId;
+        if (creatorID == userID) {
+            next();
+        }else{
+          return  res.render('404');
+        }
+
+    } else {
+        return res.render('404');
+    }
+
+
 }

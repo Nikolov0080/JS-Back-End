@@ -1,7 +1,7 @@
 const controllers = require('../controllers/cubes');
 const accessory = require('../controllers/accessory');
 const users = require('../users/auth');
-const { auth, isLogged } = require('../controllers/user')
+const { auth, isLogged, isCreator } = require('../controllers/user')
 
 module.exports = (app) => {
 
@@ -14,13 +14,13 @@ module.exports = (app) => {
     app.post('/create/accessory', accessory.createNewAccessory);
     app.get('/attach/accessory/:id', accessory.attachAccessory);
     app.post('/attach/accessory/:id', accessory.attachAccessoryPOST);
-    app.get('/edit/:id', controllers.editGET);
-    app.get('/delete/:id', controllers.deleteGET);
-    app.post('/edit/:id', controllers.editPOST);
-    app.post('/delete/:id', controllers.deletePOST);
+    app.get('/edit/:id', isCreator, controllers.editGET);
+    app.get('/delete/:id', isCreator, controllers.deleteGET);
+    app.post('/edit/:id', isCreator, controllers.editPOST);
+    app.post('/delete/:id', isCreator, controllers.deletePOST);
     // AUTH
 
-    app.get('/login',isLogged, users.loginGET);
+    app.get('/login', isLogged, users.loginGET);
     app.get('/register', isLogged, users.registerGET);
     app.post('/register', users.registerPOST);
     app.post('/login', users.loginPOST);
