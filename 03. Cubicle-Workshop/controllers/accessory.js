@@ -6,9 +6,7 @@ const { getCube, getAccessories, updateCube, updateAccessory } = require('./CRUD
 
 
 exports.createAccessory =  (req, res) => {
-
     res.render('createAccessory');
-
 }
 
 exports.createNewAccessory = async (req, res) => {
@@ -24,20 +22,19 @@ exports.createNewAccessory = async (req, res) => {
             res.redirect('/');
         }
     });
-
 }
 
 exports.attachAccessory = async (req, res) => {
 
     const [data] = await getCube({ _id: req.params.id })
-    const accessories = await getAccessories()
+    const accessories = await getAccessories();
     const cube = {
         ...data._doc,
         accessories,
         isCompletelyAttached: data._doc.accessories.length === accessories.length
     };
-    res.render('attachAccessory', { cube });
 
+    res.render('attachAccessory', { cube });
 }
 
 exports.attachAccessoryPOST = async (req, res) => {
@@ -45,8 +42,8 @@ exports.attachAccessoryPOST = async (req, res) => {
         accessory
     } = req.body;
 
-    await updateCube(req.params.id, accessory)
-    await updateAccessory(req.params.id, accessory)
+    await updateCube(req.params.id, accessory);
+    await updateAccessory(req.params.id, accessory);
 
-    res.redirect(`/details/${req.params.id}`)
+    res.redirect(`/details/${req.params.id}`);
 }

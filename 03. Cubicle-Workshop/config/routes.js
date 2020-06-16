@@ -19,16 +19,11 @@ module.exports = (app) => {
     app.post('/edit/:id', isCreator, controllers.editPOST);
     app.post('/delete/:id', isCreator, controllers.deletePOST);
     // AUTH
-
     app.get('/login', isLogged, users.loginGET);
     app.get('/register', isLogged, users.registerGET);
     app.post('/register', users.registerPOST);
     app.post('/login', users.loginPOST);
-
     app.get('/logout', users.logout);
-    // TODO create login,register,edit and delete POST routes!
-
     // AUTH
-
     app.get('*', controllers.notFound);
 };

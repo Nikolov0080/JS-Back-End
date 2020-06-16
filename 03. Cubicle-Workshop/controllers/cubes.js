@@ -36,10 +36,9 @@ exports.All = async (req, res) => {
     Cube.find().lean().then(cube => {
         let newCubes = { ...cube };
         res.render('index', { newCubes });
-
     });
-
 }
+
 exports.details = async (req, res) => {
     const id = { _id: req.params.id }
     const cube = getCube(id);
@@ -55,9 +54,7 @@ exports.details = async (req, res) => {
     } else {
         res.redirect('/')
     }
-
 }
-
 
 exports.editGET = async (req, res,) => {
     const cube = await Cube.findOne({ _id: req.params.id })
@@ -73,25 +70,23 @@ exports.deletePOST = async (req, res,) => {
 
     await Cube.deleteOne({ _id: req.params.id });
     console.log('Cube deleted successfully!');
-    res.redirect('/')
+    res.redirect('/');
 }
 
 exports.editPOST = async (req, res,) => {
 
     let cubeToUpdate = await Cube.findOne({ _id: req.params.id })
     let updateData = req.body;
-
     const updated = Object.assign(cubeToUpdate, updateData)
-
 
     await Cube.updateOne({ _id: req.params.id }, updated, (err, raw) => {
         if (err) { console.error(err) }
-        console.log('Cube updated !')
+        console.log('Cube updated !');
     });
 
-    res.redirect(`/`)
+    res.redirect(`/`);
 }
 
 exports.notFound = (req, res) => {
-    res.render('404')
+    res.render('404');
 }

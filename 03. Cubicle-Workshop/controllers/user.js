@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Cube = require('../models/Cube').cubeModel;
 
-
 const hashFunc = {
     createHash: (password) => { return bcrypt.hashSync(password, 10) },
     readHash: (password, hash) => {
@@ -78,10 +77,7 @@ exports.isCreator = async (req, res, next) => {
         }else{
           return  res.render('404');
         }
-
     } else {
         return res.render('404');
     }
-
-
 }

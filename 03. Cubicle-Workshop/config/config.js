@@ -1,6 +1,5 @@
 require('dotenv').config()
 
-
 module.exports = {
     development: {
         port: process.env.PORT || 3000,
@@ -9,5 +8,3 @@ module.exports = {
     },
     production: {}
 };
-
-// console.log(process.env.DB_PASS)

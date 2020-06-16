@@ -2,7 +2,6 @@ const User = require('../models/users').User;
 
 const { saveUser, loginUser, isLogged } = require('../controllers/user');
 
-
 exports.loginGET = (req, res) => {
     res.render('loginPage');
 }
