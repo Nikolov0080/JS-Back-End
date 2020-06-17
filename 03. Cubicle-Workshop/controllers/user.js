@@ -23,23 +23,20 @@ const tokenFunc = (userID, username, privateKey) => {
 exports.saveUser = async (req, res) => {
     const { username, password, repeatPassword } = req.body;
 
-    if ((password === repeatPassword) && (username.match(/^[A-z\d]+$/)) && (password.match(/^[A-z\d]+$/))) {
+    if ((password === repeatPassword) && (password.match(/^[A-z\d]+$/) && (username.match(/^[A-z\d]+$/)))) {
 
         const hash = hashFunc.createHash(password);
+        const user = new User({ username, password: hash });
 
-        const user = await new User({ username, password: hash });
-        const userData = user.save();
+        const data = user.save()
 
-        if (userData) {
-            res.cookie('aid', tokenFunc(userData._id, username, privateKey));
-            console.log(`User ${username} created successful and logged in!`);
-        } else {
-            return false
-        }
+        res.cookie('aid', tokenFunc(data._id, username, privateKey));
+        console.log(`User ${username} created successful and logged in!`);
 
         return true;
     }
 
+    return false;
 }
 
 exports.loginUser = async (req, res) => {

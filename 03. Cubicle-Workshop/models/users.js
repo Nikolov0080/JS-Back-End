@@ -5,7 +5,8 @@ const userSchema = new Schema({
     username: {
         type: String, required: true, minlength: 5,
         unique: true,
-        required: true
+        required: true,
+        match: /^[A-z\d]+$/
     },
     password: {
         type: String, required: true, minlength: 8,

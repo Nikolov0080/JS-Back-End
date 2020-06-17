@@ -12,7 +12,8 @@ exports.registerGET = (req, res) => {
 
 exports.registerPOST = async (req, res) => {
     const status = await saveUser(req, res);
-
+    console.log("sattus " + status);
+    
     if (status) {
         res.redirect('/');
     } else {
@@ -23,13 +24,13 @@ exports.registerPOST = async (req, res) => {
 exports.loginPOST = async (req, res) => {
     const status = await loginUser(req, res);
 
-    if (!status) {
+    if (status) {
         res.redirect('/');
     } else {
-        res.render('404');
+        res.redirect('/login');
     }
 }
 
-exports.logout = (req, res) => { // TODO
+exports.logout = (req, res) => {
     res.clearCookie('aid').redirect('/');
 }
