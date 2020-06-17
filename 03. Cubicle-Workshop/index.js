@@ -8,7 +8,11 @@ const mongoose = require('mongoose');
 mongoose.connect(config.databaseUrl, { useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
     if (err) { console.error(err); throw err }
     console.log('Cloud DB connected!');
-})
+});
+
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
 // /db
 
 require('./config/express')(app);

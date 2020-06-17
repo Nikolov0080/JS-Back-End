@@ -16,7 +16,7 @@ exports.registerPOST = async (req, res) => {
     if (status) {
         res.redirect('/');
     } else {
-        res.render('404');
+        res.redirect('/register');
     }
 }
 

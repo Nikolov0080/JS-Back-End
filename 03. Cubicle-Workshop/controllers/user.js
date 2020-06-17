@@ -20,17 +20,26 @@ const tokenFunc = (userID, username, privateKey) => {
     return token;
 }
 
-exports.saveUser = (req, res) => {
+exports.saveUser = async (req, res) => {
     const { username, password, repeatPassword } = req.body;
-    if (password === repeatPassword) {
+
+    if ((password === repeatPassword) && (username.match(/^[A-z\d]+$/)) && (password.match(/^[A-z\d]+$/))) {
+
         const hash = hashFunc.createHash(password);
-        const user = new User({ username, password: hash });
+
+        const user = await new User({ username, password: hash });
         const userData = user.save();
-        res.cookie('aid', tokenFunc(userData._id, username, privateKey));
-        console.log(`User ${username} created successful and logged in!`);
+
+        if (userData) {
+            res.cookie('aid', tokenFunc(userData._id, username, privateKey));
+            console.log(`User ${username} created successful and logged in!`);
+        } else {
+            return false
+        }
+
+        return true;
     }
 
-    return true;
 }
 
 exports.loginUser = async (req, res) => {
@@ -67,15 +76,15 @@ exports.isLogged = (req, res, next) => {
 
 exports.isCreator = async (req, res, next) => {
     const token = req.cookies['aid']; // get the token
-    
+
     if (token) {
         const { userID } = await jwt.verify(token, privateKey)// get the ID from the token
         const cubeID = { _id: req.params.id };
         const creatorID = (await Cube.findOne(cubeID)).creatorId;
         if (creatorID == userID) {
             next();
-        }else{
-          return  res.render('404');
+        } else {
+            return res.render('404');
         }
     } else {
         return res.render('404');
