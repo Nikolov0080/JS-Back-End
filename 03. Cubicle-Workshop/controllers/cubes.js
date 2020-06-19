@@ -3,12 +3,13 @@ const Cube = require('../models/Cube').cubeModel;
 const { getCube, getCubeWithAccessories } = require('./CRUD_Funcs');
 
 const jwt = require('jsonwebtoken');
+const { isLogged } = require('./user');
 
 exports.about = (req, res) => {
     res.render('about');
 }
 
-exports.create =  (req, res,) => {
+exports.create = (req, res,) => {
 
     res.render('create');
 }
@@ -32,10 +33,15 @@ exports.createCube = async (req, res) => {
 }
 
 exports.All = async (req, res) => {
+    const token = req.cookies['aid'];
 
     Cube.find().lean().then(cube => {
         let newCubes = { ...cube };
-        res.render('index', { newCubes });
+        if (token) {
+            return res.render('index', { newCubes, isLogged: true });
+        } else {
+            return res.render('index', { newCubes });
+        }
     });
 }
 

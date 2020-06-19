@@ -24,7 +24,7 @@ module.exports = (app) => {
     app.post('/register', users.registerPOST);
     app.post('/login', users.loginPOST);
     app.get('/logout', users.logout);
-    
+
     // AUTH
     app.get('*', controllers.notFound);
 };

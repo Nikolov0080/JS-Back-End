@@ -27,7 +27,6 @@ exports.saveUser = async (req, res) => {
 
         const hash = hashFunc.createHash(password);
         const user = new User({ username, password: hash });
-
         const data = user.save()
 
         res.cookie('aid', tokenFunc(data._id, username, privateKey));
@@ -37,20 +36,23 @@ exports.saveUser = async (req, res) => {
     }
 
     if (!(password.match(/^[A-z\|\d]+$/)) || !(username.match(/^[A-z\d]+$/))) {
-        return false
+        return false;
     }
 
 }
 
 exports.loginUser = async (req, res) => {
     const { username, password } = req.body;
-    const currentUser = await User.findOne({ username })
+    const currentUser = await User.findOne({ username });
+
     if (currentUser) {
         const isLogged = hashFunc.readHash(password, currentUser.password);
         if (isLogged) {
             res.cookie('aid', tokenFunc(currentUser._id, username, privateKey));
             console.log(`${username} is now logged in!`);
         }
+    } else {
+        return res.redirect('/login?error=true');
     }
 
     return false;
@@ -69,7 +71,7 @@ exports.isLogged = (req, res, next) => {
     const token = req.cookies['aid'];
     if (token) {
         res.redirect('/');
-    } else {
+    }else{
         next();
     }
 }

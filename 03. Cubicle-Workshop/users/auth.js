@@ -3,7 +3,11 @@ const User = require('../models/users').User;
 const { saveUser, loginUser, isLogged } = require('../controllers/user');
 
 exports.loginGET = (req, res) => {
-    res.render('loginPage');
+    const error = req.url === '/login?error=true' ? 'Username of Password invalid !' : null
+
+    res.render('loginPage',{
+        error
+    });
 }
 
 exports.registerGET = (req, res) => {
