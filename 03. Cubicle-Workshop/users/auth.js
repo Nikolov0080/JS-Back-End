@@ -7,19 +7,24 @@ exports.loginGET = (req, res) => {
 }
 
 exports.registerGET = (req, res) => {
-    res.render('registerPage');
+
+    const error = req.url === '/register?error=true' ? 'Username of Password invalid !' : null
+    res.render('registerPage', {
+        error
+    });
 }
 
 exports.registerPOST = async (req, res) => {
     const status = await saveUser(req, res);
-    console.log("sattus " + status);
-    
-    if (status) {
-        res.redirect('/');
+  
+    if (!status) {
+        return res.redirect('/register?error=true');
     } else {
-        res.redirect('/register');
+        res.redirect('/');
     }
 }
+
+
 
 exports.loginPOST = async (req, res) => {
     const status = await loginUser(req, res);

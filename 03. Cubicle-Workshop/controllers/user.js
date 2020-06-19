@@ -36,7 +36,10 @@ exports.saveUser = async (req, res) => {
         return true;
     }
 
-    return false;
+    if (!(password.match(/^[A-z\|\d]+$/)) || !(username.match(/^[A-z\d]+$/))) {
+        return false
+    }
+
 }
 
 exports.loginUser = async (req, res) => {
