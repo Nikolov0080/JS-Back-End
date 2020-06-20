@@ -1,12 +1,7 @@
 const Model = require("../models/Cube").cubeModel;
 const Accessory = require("../models/Accessory").Accessory;
 const mongoose = require("mongoose");
-const {
-  getCube,
-  getAccessories,
-  updateCube,
-  updateAccessory,
-} = require("./CRUD_Funcs");
+const { getCube, getAccessories, updateCube, updateAccessory, } = require("./CRUD_Funcs");
 
 exports.createAccessory = (req, res) => {
   const isLogged = !!req.cookies["aid"];

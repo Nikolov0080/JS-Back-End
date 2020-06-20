@@ -79,6 +79,22 @@ exports.editGET = async (req, res) => {
   res.render("editCubePage", { cube });
 };
 
+exports.editPOST = async (req, res) => {
+  let cubeToUpdate = await Cube.findOne({ _id: req.params.id });
+  let updateData = req.body;
+  const updated = Object.assign(cubeToUpdate, updateData);
+
+  await Cube.updateOne({ _id: req.params.id }, updated, (err, raw) => {
+    if (err) {
+      console.error(err);
+      return res.redirect(`/edit/${req.params.id}?error=true`);// TODO
+    }
+    console.log("Cube updated !");
+  });
+
+  res.redirect(`/`);
+};
+
 exports.deleteGET = async (req, res) => {
   const cube = await Cube.findOne({ _id: req.params.id });
   res.render("deleteCubePage", { cube });
@@ -90,20 +106,6 @@ exports.deletePOST = async (req, res) => {
   res.redirect("/");
 };
 
-exports.editPOST = async (req, res) => {
-  let cubeToUpdate = await Cube.findOne({ _id: req.params.id });
-  let updateData = req.body;
-  const updated = Object.assign(cubeToUpdate, updateData);
-
-  await Cube.updateOne({ _id: req.params.id }, updated, (err, raw) => {
-    if (err) {
-      console.error(err);
-    }
-    console.log("Cube updated !");
-  });
-
-  res.redirect(`/`);
-};
 
 exports.notFound = (req, res) => {
   res.render("404");
