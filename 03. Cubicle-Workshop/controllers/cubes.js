@@ -1,6 +1,7 @@
 const { privateKey } = require("./JWT_P_Key");
 const Cube = require("../models/Cube").cubeModel;
 const { getCube, getCubeWithAccessories } = require("./CRUD_Funcs");
+const { check, validationResult, checkSchema } = require('express-validator');
 
 const jwt = require("jsonwebtoken");
 // const { isLogged } = require("./user");
@@ -67,7 +68,7 @@ exports.details = async (req, res) => {
     getCubeWithAccessories(id).then(([cube]) => {
       const isCreator = userID == cube.creatorId;
       currentCube = { ...cube, isCreator };
-      res.render("updatedDetailsPage", { currentCube });
+      res.render("updatedDetailsPage", { currentCube, isLogged: true });
     });
   } else {
     res.redirect("/");
@@ -75,24 +76,57 @@ exports.details = async (req, res) => {
 };
 
 exports.editGET = async (req, res) => {
+
   const cube = await Cube.findOne({ _id: req.params.id });
-  res.render("editCubePage", { cube });
+  const url = req.url;
+
+  if (url.includes('error=true')) {
+    const error = `Wrong fields: ${url.split('+')[1].replace('%7C',', ')}`;
+
+
+    console.log(error);
+    return res.render("editCubePage", { cube, error });
+
+  }else{
+
+    res.render("editCubePage", { cube });
+  }
 };
 
 exports.editPOST = async (req, res) => {
-  let cubeToUpdate = await Cube.findOne({ _id: req.params.id });
-  let updateData = req.body;
-  const updated = Object.assign(cubeToUpdate, updateData);
 
-  await Cube.updateOne({ _id: req.params.id }, updated, (err, raw) => {
-    if (err) {
-      console.error(err);
-      return res.redirect(`/edit/${req.params.id}?error=true`);// TODO
-    }
-    console.log("Cube updated !");
-  });
+  const errors = validationResult(req);
 
-  res.redirect(`/`);
+  if (!errors.isEmpty()) {
+
+    const wrongValues = errors.array()
+      .reduce((acc, curVal) => {
+        return acc.concat(` ${curVal.param}`);
+      }, '')
+      .trim();
+
+    console.log(`Input Error >>>> Wrong fields: ${wrongValues}`)
+    const respData = wrongValues.replace(' ','|')
+    return res.redirect(`/edit/${req.params.id}?error=true+${respData}`);
+
+  } else {
+
+    let cubeToUpdate = await Cube.findOne({ _id: req.params.id });
+    let updateData = req.body;
+
+    const updated = Object.assign(cubeToUpdate, updateData);
+
+    await Cube.updateOne({ _id: req.params.id }, updated, (err, raw) => {
+      if (err) {
+        console.error(err);
+        return res.redirect(`/edit/${req.params.id}?error=true`);
+      }
+      console.log("Cube updated !");
+    });
+
+    res.redirect(`/`);
+  }
+
 };
 
 exports.deleteGET = async (req, res) => {
