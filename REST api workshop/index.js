@@ -1,10 +1,11 @@
 const express = require("express");
-const { connectDB } = require('./database');
+const { connectDB } = require('./config/database');
 const cubeRouter = require('./routes/cubes');
 const app = express();
 app.use(express.json());
 
 connectDB();
+
 app.use('/cube', cubeRouter);
 
 app.listen(4000, () => {
