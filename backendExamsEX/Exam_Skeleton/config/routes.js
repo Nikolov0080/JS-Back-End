@@ -1,7 +1,11 @@
 const routes = require('../routes');
 
+
 module.exports = (app) => {
-// TODO
 
+    app.use('/home', routes.home);
 
+    app.use('/users', routes.users);
+
+    // app.use('/TASK', routes.TASK); // TODO
 }
