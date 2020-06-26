@@ -7,5 +7,5 @@ module.exports = (app) => {
 
     app.use('/users', routes.users);
 
-    // app.use('/TASK', routes.TASK); // TODO
+    app.use('/trips', routes.trips); // TODO
 }

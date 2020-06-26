@@ -3,8 +3,14 @@
 module.exports = {
     get: {
         home: (req, res, next) => {
-            console.log(req.user); // ===> User Data
-            res.render('home');
+           
+            if (req.user) {
+                
+                return res.render('home', {
+                    userEmail: req.user.email
+                });
+            }
+            return res.render('home')
         },
         post: {
 

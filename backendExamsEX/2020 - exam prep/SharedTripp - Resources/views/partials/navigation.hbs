@@ -8,21 +8,21 @@
 
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-
+                {{#if userEmail}}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Shared Tripps</a>
+                    <a class="nav-link" href="/trips/sharedTrips">Shared Tripps</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user/logout">Logout as [{{ loggedEmail }}]</a>
+                    <a class="nav-link" href="/users/logout">Logout as [{{ userEmail }}]</a>
                 </li>
-
+                {{else}}
                 <li class="nav-item">
                     <a class="nav-link" href="/users/login">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/users/register">Register</a>
                 </li>
-
+                {{/if}}
             </ul>
         </div>
 

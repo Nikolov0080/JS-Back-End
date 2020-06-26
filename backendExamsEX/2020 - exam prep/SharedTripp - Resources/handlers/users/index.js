@@ -6,11 +6,22 @@ const { cookie } = require('../../config/config');
 module.exports = {
     get: {
         login(req, res, next) {
+            if (req.cookies[cookie]) {
+                return res.redirect('/home/')
+            }
             res.render('login');
         }
         ,
         register(req, res, next) {
+            if (req.cookies[cookie]) {
+                return res.redirect('/home/')
+            }
             res.render('register');
+        },
+
+        logout(req, res, next) {
+            req.user = undefined;
+            res.clearCookie('x-auth-token').redirect('/home/');
         }
     },
     post: {
@@ -23,11 +34,11 @@ module.exports = {
                 if (!match) { next(err); return; } // TODO add wRONG PASSWORD NOTIFICATION
 
                 const token = jwt.createToken(user);
-                res.status(201).cookie(cookie, token).redirect('/users/login');
+                res.status(201).cookie(cookie, token).redirect('/home/');
 
             });
 
-       
+
         },
         register(req, res, next) {
 
@@ -40,7 +51,7 @@ module.exports = {
                     .catch((e) => console.error(e));
 
             } else {
-                return res.redirect('/users/register')
+                return res.redirect('/users/register');
             }
 
             res.redirect('/users/login');
