@@ -4,7 +4,6 @@ const isAuth = require('../utils/isAuth');
 
 // TODO !
 
-router.get('/', handlers.get.home);
-
+router.get('/', isAuth(true), handlers.get.home);
 
 module.exports = router;
