@@ -36,8 +36,11 @@ const tripSchema = new Schema({
         type: String
     },
     buddies: [{
+        unique: true,
         type: 'ObjectId',
-        ref: 'User'
+        ref: 'User',
+
+
     }]
 });
 

@@ -43,8 +43,19 @@
                     <p style="width: 100%; word-wrap: break-word;" class="lead">
                         {{description}} </p>
 
+                    {{#if canDelete}}
                     <a href="/trips/deleteTrip/{{_id}}" class="btn btn-danger">Close this tripp</a>
+                    {{else}}
+                    <a href="/trips/joinTrip/{{_id}}" class="btn btn-info">Join now, [{{seats}}] seats left</a>
+                    {{/if}}
 
+                    {{#if isJoined}}
+                    <a href="/home/" class="btn btn-info">Already joined. Don't be late!</a>
+                    {{/if}}
+
+                    {{#if notAvailable}}
+                    <a href="/home/" class="btn btn-secondary">No seats available [0]</a>
+                    {{/if}}
                 </div>
             </div>
 

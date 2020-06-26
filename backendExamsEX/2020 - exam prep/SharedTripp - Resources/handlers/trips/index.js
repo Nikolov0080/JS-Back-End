@@ -24,15 +24,29 @@ module.exports = {
 
                 const driverData = await User.findById(tripData.driver);
 
-                tripData = { ...tripData, driverEmail: driverData.email }
+                const canDelete = (req.user._id == tripData.driver);
 
+                const isJoined = tripData.buddies.some((element) => element == req.user.id);
+
+                tripData = { ...tripData, driverEmail: driverData.email, canDelete, isJoined }
                 return res.render('tripDetails', tripData)
             })
 
         },
         deleteTrip(req, res, next) {
-
             Trip.deleteOne({ _id: req.params.id }).then(console.log)
+            res.redirect('/trips/sharedTrips');
+        },
+        async joinTrip(req, res, next) {
+
+            const dataToUpdate = await Trip.findById(req.params.id);
+            if (dataToUpdate.seats >= 1) {
+                if (!dataToUpdate.buddies.includes(req.user._id)) {
+                    dataToUpdate.seats -= 1;
+                    dataToUpdate.buddies.push(req.user._id);
+                }
+                Trip.updateOne({ _id: req.params.id }, dataToUpdate).then(console.log)
+            }
 
             res.redirect('/trips/sharedTrips');
         }
