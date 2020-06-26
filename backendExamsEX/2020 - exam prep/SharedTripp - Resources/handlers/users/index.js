@@ -1,8 +1,7 @@
 const User = require('./User');
 const jwt = require('../../utils/jwt');
 const { cookie } = require('../../config/config');
-const bcrypt = require('bcrypt');
-const mongoose = require('mongoose');
+
 
 module.exports = {
     get: {
@@ -21,14 +20,14 @@ module.exports = {
             User.findOne({ email }).then((user) => {
                 return Promise.all([user.passwordsMatch(password), user]);
             }).then(([match, user]) => {
+                if (!match) { next(err); return; } // TODO add wRONG PASSWORD NOTIFICATION
 
+                const token = jwt.createToken(user);
+                res.status(201).cookie(cookie, token).redirect('/users/login');
 
-            })
+            });
 
-
-
-
-            res.redirect('/users/login');
+       
         },
         register(req, res, next) {
 
@@ -41,7 +40,7 @@ module.exports = {
                     .catch((e) => console.error(e));
 
             } else {
-               return res.redirect('/users/register')
+                return res.redirect('/users/register')
             }
 
             res.redirect('/users/login');
