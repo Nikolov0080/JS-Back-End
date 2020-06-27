@@ -4,7 +4,8 @@ const { String, ObjectId } = Schema.Types;
 const bcrypt = require('bcrypt');
 const saltRounds = 5;
 const userSchema = new Schema({
-    email: {
+    
+    username: {
         type: String,
         required: true,
         unique: true
@@ -16,15 +17,15 @@ const userSchema = new Schema({
     },
 
     // special for the  TASK!!!
-    trippHistory: [{
+    courses: [{
         type: ObjectId,
-        ref: 'Tripp'
+        ref: 'Courses'
     }]
 });
 
 userSchema.methods = {
-    passwordsMatch(password){
-        return bcrypt.compare(password,this.password)
+    passwordsMatch(password) {
+        return bcrypt.compare(password, this.password)
     }
 }
 

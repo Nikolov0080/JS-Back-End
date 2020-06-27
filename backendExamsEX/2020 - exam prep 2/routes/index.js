@@ -1,9 +1,9 @@
 const home = require('./home');
 const users = require('./users');
-const TASK = require('./TASK');
+const courses = require('./courses');
 
 module.exports = {
     home,
     users,
-    TASK
+    courses
 }

@@ -9,6 +9,8 @@
     "express": "^4.17.1",
     "express-handlebars": "^4.0.4",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.27.0",
+    "momentjs": "^2.0.0",
     "mongoose": "^5.9.20",
     "nodemon": "^2.0.4"
   },
