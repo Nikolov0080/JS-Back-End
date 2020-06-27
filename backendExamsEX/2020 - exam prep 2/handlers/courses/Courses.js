@@ -6,16 +6,18 @@ const coursesSchema = new Schema({
     title: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        minlength: 6,
+
     },
     description: {
         type: String,
         required: true,
-        maxlength: 50
+
     },
     imageUrl: {
         type: String,
-        required: true
+        required: true,
     },
     isPublic: {
         type: String,

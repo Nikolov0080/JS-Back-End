@@ -15,8 +15,6 @@ module.exports = {
                 const isCreator = req.user.username == result.creator;
                 const userId = req.user._id;
 
-
-
                 res.render('course-details', {
                     username: req.user.username,
                     isLogged: req.user !== undefined,
@@ -27,10 +25,16 @@ module.exports = {
             })
         },
         create(req, res, next) {
+
+
             if (req.user == undefined) {
                 return res.redirect('/home/')
             }
-            res.render('create-course')
+
+            res.render('create-course', {
+                isLogged: !!(req.user),
+                username: req.user.username
+            })
         },
         delete(req, res, next) {
 
@@ -60,6 +64,7 @@ module.exports = {
     },
     post: {
         create: async (req, res, next) => {
+
             const time = moment().format('LTS');
             const { title, description, imageUrl, isPublic } = req.body;
 
@@ -73,16 +78,21 @@ module.exports = {
             }
 
             await Courses.create(course).then((data) => {
-                return res.redirect('/home/');
-            })
+                res.redirect('/home/');
+            }).catch((err) => {
+                console.log(err.message);
 
-            res.redirect('/courses/create/?error')
+                return res.render('create-course', {
+                    message: 'Invalid data... Try again',
+                    form: req.body
+                })
+            });
         },
         edit(req, res, next) {
             console.log(req.params);
             const { title, description, imageUrl } = req.body;
             console.log(req.body)
-            Courses.updateOne(req.params, {title, description, imageUrl}).then(console.log)
+            Courses.updateOne(req.params, { title, description, imageUrl }).then(console.log)
 
             res.redirect('/home/')
         }

@@ -19,8 +19,7 @@ module.exports = {
             }
 
             res.render('login');
-        }
-        ,
+        },
         register(req, res, next) {
 
             if (req.user) {
@@ -28,7 +27,6 @@ module.exports = {
             }
             if (req.url.includes('error')) {
                 return res.render('register', { message: 'Something went wrong try again' });
-
             }
             res.render('register');
         },
