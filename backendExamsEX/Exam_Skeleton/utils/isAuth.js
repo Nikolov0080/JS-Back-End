@@ -2,7 +2,7 @@ const jwt = require('./jwt');
 const User = require('../handlers/users/User');
 const { cookie } = require('../config/config');
 
-module.exports = (justContinue = false) => { // isAuth(true) = skip check for user / false = check for user
+module.exports = (justContinue = false) => { 
 
     return function (req, res, next) {
         const token = req.cookies[cookie] || '';
