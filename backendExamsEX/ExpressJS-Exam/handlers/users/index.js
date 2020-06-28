@@ -11,36 +11,42 @@ module.exports = {
         ,
         register(req, res, next) {
             res.render('register');
+        },
+        logout(req, res, next) {
+            req.user = undefined;
+            res.clearCookie('x-auth-token').redirect('/home/');
         }
     },
     post: {
         login(req, res, next) {
 
-            const { email, password } = req.body;
-            User.findOne({ email }).then((user) => {
+            const { username, password } = req.body;
+            User.findOne({ username }).then((user) => {
                 return Promise.all([user.passwordsMatch(password), user]);
             }).then(([match, user]) => {
                 if (!match) { next(err); return; } // TODO add wRONG PASSWORD NOTIFICATION
 
                 const token = jwt.createToken(user);
-                res.status(201).cookie(cookie, token).redirect('/users/login');
+                res.status(201).cookie(cookie, token).redirect('/home/');
 
-            });
+            }).catch((e) => {
+                res.render('login',{message:"wrong username or password"})
+            })
 
-       
+
         },
         register(req, res, next) {
 
-            const { email, password, rePassword } = req.body;
+            const { username, password, rePassword } = req.body;
 
             if (password === rePassword) {
 
-                User.create({ email, password })// Creating the user (Register)
-                    .then(console.log(email + " Is Created !!"))
+                User.create({ username, password })// Creating the user (Register)
+                    .then(console.log(username + " Is Created !!"))
                     .catch((e) => console.error(e));
 
             } else {
-                return res.redirect('/users/register')
+                return res.render('register',{message:'something went wrong...'})
             }
 
             res.redirect('/users/login');

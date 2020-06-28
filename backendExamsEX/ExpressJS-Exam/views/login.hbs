@@ -1,8 +1,16 @@
-<h1>login form here</h1>
- <form method="POST" action="/users/login">
-    <input type="text" name="email">
-    <input type="text" name="password">
-    <button type="submit">submit</button>
-    <br>
-    <a href="/home/">Home</a>
-</form>
+
+        <main>
+            <form action="/users/login" method="Post">
+                <h2>Login</h2>
+                <div>
+                    <label for="username">Username:</label>
+                    <input name="username" type="text" placeholder="Username" value="">
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input name="password" type="password" placeholder="Password" value="">
+                </div>
+
+                <button class="btn" type="submit">Login</button>
+            </form>
+        </main>

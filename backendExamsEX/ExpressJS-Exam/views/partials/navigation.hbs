@@ -1,1 +1,13 @@
-<h3>navigation</h3>
+<nav>
+    <a>Theater</a>
+    <ul>
+        <li><a href="/home/">Home </a></li>
+        {{#if isLogged}}
+        <li><a href="/users/logout">Logout</a></li>
+        {{else}}
+        <li><a href="/users/login">Login</a></li>
+        <li><a href="/users/register">Register</a></li>
+        {{/if}}
+    </ul>
+</nav>
+{{> notification}}

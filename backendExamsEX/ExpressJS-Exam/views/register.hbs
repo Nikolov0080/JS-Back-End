@@ -1,11 +1,21 @@
-<h1>Register form here</h1>
- <form method="POST" action="/users/register">
-    <input type="text" name="email">
-    <input type="text" name="password">
-    <input type="text" name="rePassword">
+<main>
+    <form method="POST" action="/users/register">
+        <h2>Register</h2>
+        <div class="on-dark">
+            <label for="username">Username:</label>
+            <input name="username" type="text" placeholder="Steven" value="">
+        </div>
 
-    <button type="submit">submit</button>
-    <br>
-    <a href="/home/">Home</a>
+        <div class="on-dark">
+            <label for="password">Password:</label>
+            <input name="password" type="password" placeholder="********" value="">
+        </div>
 
-</form>
+        <div class="on-dark">
+            <label for="repeatPassword">Repeat Password:</label>
+            <input name="rePassword" type="password" placeholder="********" value="">
+        </div>
+
+        <button class="btn" type="submit">Register</button>
+    </form>
+</main>

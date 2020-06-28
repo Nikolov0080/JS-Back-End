@@ -1,9 +1,11 @@
 const home = require('./home');
 const users = require('./users');
-const TASK = require('./TASK');
+const theatre = require('./theatre');
+const router = require('./home');
+
 
 module.exports = {
     home,
     users,
-    TASK
+    theatre
 }
