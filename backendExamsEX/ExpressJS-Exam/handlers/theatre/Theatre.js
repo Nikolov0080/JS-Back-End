@@ -6,7 +6,8 @@ const theatreSchema = new Schema({
     title: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        minlength:3
     },
     description: {
         type: String,

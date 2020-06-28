@@ -1,7 +1,7 @@
 const User = require('./User');
 const jwt = require('../../utils/jwt');
 const { cookie } = require('../../config/config');
-
+const validatorResults = require('express-validator').validationResult
 
 module.exports = {
     get: {
@@ -30,7 +30,7 @@ module.exports = {
                 res.status(201).cookie(cookie, token).redirect('/home/');
 
             }).catch((e) => {
-                res.render('login',{message:"wrong username or password"})
+                res.render('login', { message: "wrong username or password" })
             })
 
 
@@ -39,6 +39,10 @@ module.exports = {
 
             const { username, password, rePassword } = req.body;
 
+            const errors = validatorResults(req)
+            const { msg } = errors.errors[0]
+            
+
             if (password === rePassword) {
 
                 User.create({ username, password })// Creating the user (Register)
@@ -46,7 +50,7 @@ module.exports = {
                     .catch((e) => console.error(e));
 
             } else {
-                return res.render('register',{message:'something went wrong...'})
+                return res.render('register', { message: msg  })
             }
 
             res.redirect('/users/login');

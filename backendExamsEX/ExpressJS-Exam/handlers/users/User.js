@@ -7,15 +7,16 @@ const userSchema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true
-    },
+        unique: true,
+        minlength: 3
 
+    },
     password: {
         type: String,
         required: true,
-    },
+        minlength: 3
 
-    
+    },
     likedPlays: [{
         type: ObjectId,
         ref: 'Tripp'
@@ -35,13 +36,11 @@ userSchema.pre('save', function (next) {
 
             bcrypt.hash(this.password, salt, (err, encryptedPassword) => {
                 if (err) { return next(err); }
-
                 this.password = encryptedPassword;
                 next();
             });
         });
         return;
-        
     }
 
     next();

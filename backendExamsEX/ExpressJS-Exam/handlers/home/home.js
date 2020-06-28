@@ -17,7 +17,6 @@ module.exports = {
         async sort(req, res, next) {
 
             const da = await Theatres.find().lean();
-
             const allTheatres = da.sort((a, b) => {
                 return b.usersLiked.length - a.usersLiked.length
             });
@@ -29,13 +28,13 @@ module.exports = {
                 allTheatres
             });
         },
-       async sortDate(req, res, next) {
+        async sortDate(req, res, next) {
             const da = await Theatres.find().lean();
 
             const allTheatres = da.sort((a, b) => {
-                return b.createdAt - a.createdAt
+                return b.createdAt.split(' ')[3].split(':')[1] - a.createdAt.split(' ')[3].split(':')[1]
             });
-// .split('')[1].split(' ')
+          
             req.user !== undefined ? isLogged = true : isLogged = false;
 
             res.render('home', {
