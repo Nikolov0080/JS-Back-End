@@ -20,40 +20,46 @@ module.exports = {
     post: {
         login(req, res, next) {
 
+            const errors = validatorResults(req)
+
             const { username, password } = req.body;
-            User.findOne({ username }).then((user) => {
-                return Promise.all([user.passwordsMatch(password), user]);
-            }).then(([match, user]) => {
-                if (!match) { next(err); return; } // TODO add wRONG PASSWORD NOTIFICATION
 
-                const token = jwt.createToken(user);
-                res.status(201).cookie(cookie, token).redirect('/home/');
+            if (errors.isEmpty()) {
 
-            }).catch((e) => {
-                res.render('login', { message: "wrong username or password" })
-            })
+                User.findOne({ username }).then((user) => {
+                    return Promise.all([user.passwordsMatch(password), user]);
+                }).then(([match, user]) => {
+                    if (!match) { next(err); return; }
+
+                    const token = jwt.createToken(user);
+                    res.status(201).cookie(cookie, token).redirect('/home/');
+
+                }).catch((e) => { console.log(e); });
+            } else {
+                res.render('login', { message: errors.errors[0].msg });
+            }
 
 
         },
         register(req, res, next) {
 
             const { username, password, rePassword } = req.body;
+            const errors = validatorResults(req);
 
-            const errors = validatorResults(req)
-            const { msg } = errors.errors[0]
-            
-
-            if (password === rePassword) {
-
+            if(password !== rePassword){
+                return  res.render('register', { message: 'Passwords do not match' })
+            }
+        
+            if (errors.isEmpty()) {
                 User.create({ username, password })// Creating the user (Register)
                     .then(console.log(username + " Is Created !!"))
                     .catch((e) => console.error(e));
 
-            } else {
-                return res.render('register', { message: msg  })
+                return res.redirect('/users/login');
             }
+            console.log(errors)
 
-            res.redirect('/users/login');
+            res.render('register', { message: errors.errors[0].msg })
         }
     }
 }

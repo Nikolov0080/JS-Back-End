@@ -1,15 +1,32 @@
 const { body } = require('express-validator');
 const { check } = require('express-validator');
+const User = require('../handlers/users/User');
+
+
 
 
 exports.register = [
-    check('username')
-        .isLength({ min: 3 }).withMessage('Username must be at least 3 chars long'),
-    check('password')
-        .isLength({ min: 3 }).withMessage('Password must be at least 3 chars long'),
-    check('password')
-        .matches('rePassword').withMessage('Passwords do not match!'),
-    body('rePassword').isLength({ min: 3 }).not().isEmpty()
+    check('username').not().isEmpty().withMessage("Enter username"),
+    check('username').isLength({ min: 3 }).withMessage('Username too short'),
+
+    check('password').not().isEmpty().withMessage("Enter password"),
+    check('password').isLength({ min: 3 }).withMessage('Password too short'),
+    body('rePassword').not().isEmpty().withMessage('Repeat Password is required'),
+    
+    body('username').custom(async (username) => {
+        const user = await User.findOne({ username });
+        if (user) {
+         return Promise.reject('Username already in use');
+        } 
+    })
 ];
+
+exports.login = [
+    check('username').not().isEmpty().withMessage("Enter username"),
+    check('username').isLength({ min: 3 }).withMessage('Username too short'),
+
+    check('password').not().isEmpty().withMessage("Enter password"),
+    check('password').isLength({ min: 3 }).withMessage('Password too short')
+]
 
 // TODO finish adding as a middleware in routes/user and routes/theatre
