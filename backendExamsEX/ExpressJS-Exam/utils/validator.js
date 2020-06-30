@@ -26,7 +26,14 @@ exports.login = [
     check('username').isLength({ min: 3 }).withMessage('Username too short'),
 
     check('password').not().isEmpty().withMessage("Enter password"),
-    check('password').isLength({ min: 3 }).withMessage('Password too short')
+    check('password').isLength({ min: 3 }).withMessage('Password too short'),
+     
+    body('username').custom(async (username) => {
+        const user = await User.findOne({ username });
+        if (!user) {
+         return Promise.reject('Username not found try again');
+        } 
+    })
 ]
 
 // TODO finish adding as a middleware in routes/user and routes/theatre

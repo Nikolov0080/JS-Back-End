@@ -29,7 +29,7 @@ module.exports = {
                 User.findOne({ username }).then((user) => {
                     return Promise.all([user.passwordsMatch(password), user]);
                 }).then(([match, user]) => {
-                    if (!match) { next(err); return; }
+                    if (!match) {  res.render('login', { message: 'Wrong password please try again' }); return; }
 
                     const token = jwt.createToken(user);
                     res.status(201).cookie(cookie, token).redirect('/home/');
