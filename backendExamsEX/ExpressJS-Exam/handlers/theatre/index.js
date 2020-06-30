@@ -1,5 +1,6 @@
 const moment = require('moment');
 const Theatre = require('./Theatre');
+const validatorResults = require('express-validator').validationResult
 
 
 module.exports = {
@@ -65,6 +66,14 @@ module.exports = {
     },
     post: {
         create(req, res, next) {
+
+            const errors = validatorResults(req);
+
+            if(!errors.isEmpty()){
+                console.log(errors)
+               return res.render('create-theatre',{message:errors.errors[0].msg})
+            }
+
 
             const { title, description, imageUrl, isPublic } = req.body;
 

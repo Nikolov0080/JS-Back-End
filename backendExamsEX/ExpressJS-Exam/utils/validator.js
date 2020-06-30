@@ -12,12 +12,12 @@ exports.register = [
     check('password').not().isEmpty().withMessage("Enter password"),
     check('password').isLength({ min: 3 }).withMessage('Password too short'),
     body('rePassword').not().isEmpty().withMessage('Repeat Password is required'),
-    
+
     body('username').custom(async (username) => {
         const user = await User.findOne({ username });
         if (user) {
-         return Promise.reject('Username already in use');
-        } 
+            return Promise.reject('Username already in use');
+        }
     })
 ];
 
@@ -27,13 +27,22 @@ exports.login = [
 
     check('password').not().isEmpty().withMessage("Enter password"),
     check('password').isLength({ min: 3 }).withMessage('Password too short'),
-     
+
     body('username').custom(async (username) => {
         const user = await User.findOne({ username });
         if (!user) {
-         return Promise.reject('Username not found try again');
-        } 
+            return Promise.reject('Username not found try again');
+        }
     })
+]
+
+exports.validateCreate = [
+    // title
+    body('title').not().isEmpty().withMessage("Title cannot be empty!")
+    // description
+
+    // imageUrl
+
 ]
 
 // TODO finish adding as a middleware in routes/user and routes/theatre
