@@ -69,9 +69,9 @@ module.exports = {
 
             const errors = validatorResults(req);
 
-            if(!errors.isEmpty()){
+            if (!errors.isEmpty()) {
                 console.log(errors)
-               return res.render('create-theatre',{message:errors.errors[0].msg})
+                return res.render('create-theatre', { message: errors.errors[0].msg ,isLogged:true})
             }
 
 
@@ -91,7 +91,7 @@ module.exports = {
 
             Theatre.create(theatreData).then((result) => {
                 console.log(`theatre: ${result.title} created successful!`);
-                res.redirect('/home/');
+               return res.redirect('/home/');
             }).catch((e) => {
 
                 res.render('create-theatre', {
