@@ -8,7 +8,7 @@ var transporter = nodemailer.createTransport({
     secure: true,
     auth: {
         user: 'apofis12343@gmail.com',
-        pass: 'blacksoul123'
+        pass: '********'
     }
 });
 const admin = require("firebase-admin");
