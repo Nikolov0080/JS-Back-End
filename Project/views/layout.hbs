@@ -5,7 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-   <link rel="stylesheet" href="../style.css">
+    {{!-- database --}}
+    <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-analytics.js"></script>
+    {{!-- database --}}
+
+    <script>
+
+      let firebaseConfig = {
+            apiKey: "AIzaSyAw3PuFrpKaqwSsvDTyWJkEf1lDcXmGzJI",
+            authDomain: "project-36dfd.firebaseapp.com",
+            databaseURL: "https://project-36dfd.firebaseio.com",
+            projectId: "project-36dfd",
+            storageBucket: "project-36dfd.appspot.com",
+            messagingSenderId: "320459706256",
+            appId: "1:320459706256:web:2ebc9ed2d3779ab9fced15",
+            measurementId: "G-S4XM8KXHJ8"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+    </script>
+
+    <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -23,7 +45,7 @@
 
     {{> header}}
 
-     {{{ body }}}
+    {{{ body }}}
 
     {{> footer}}
 </body>

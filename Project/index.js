@@ -6,14 +6,25 @@ let path = require("path");
 let logger = require("morgan");
 
 let indexRouter = require("./routes/index");
-
+const nodemailer = require('nodemailer');
 
 const hbs = require("express-handlebars");
 const hbshelpers = require("handlebars-helpers");
 const multihelpers = hbshelpers();
 
 let app = express();
+const admin = require("firebase-admin");
+admin.initializeApp();
 
+var transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: 'apofis12343@gmail.com',
+        pass: 'blacksoul123'
+    }
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine(
@@ -37,12 +48,12 @@ app.use("/", indexRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};
